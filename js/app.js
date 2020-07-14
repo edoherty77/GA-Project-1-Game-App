@@ -55,11 +55,16 @@ const easySolutionArray = [
 
  			// Create divs for each cell
  			let square = document.createElement("div")
-
- 			square.innerHTML = easySolutionArray[i][j]
-
  			
- 			console.log(gameTable)
+ 			
+  			
+ 			randomNum(square)
+
+ 		
+		
+ 			square.innerHTML = easySolutionArray[i][j]
+ 			
+ 			clearRandomSquareEasy(square)
 			
  		
 
@@ -76,12 +81,18 @@ const easySolutionArray = [
 
 
 
-// const deleteRandomCell = (i, j) => {
-// 	if(i % 2 === 0 && j % 2 === 0){
+const randomNum = (square) => {
+	let randomNumber = Math.floor(Math.random() * 100) + 1
+	square.className = randomNumber
 
-// 	}
-// }
+}
 
+
+const clearRandomSquareEasy = (square) => {
+	if(square.className % 2 == 0){
+		square.innerHTML = ""
+	}
+}
 
 
 // const applyRandomNum = (square) => {
