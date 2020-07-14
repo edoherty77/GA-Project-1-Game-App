@@ -36,6 +36,37 @@ h1 {
 	justify-content: space-around;
 }
 
-/*.test {
-	height: 10px;
-}*/
+/* Create thicker border every 3 columns and rows*/
+
+tr:nth-of-type(3n) {
+	
+	border-bottom: 3px solid black;
+	
+}
+
+tr {
+	 
+	border-right: 3px solid black;
+	border-left: 3px solid black;
+
+}
+tr:first-child{
+	border-top: 3px solid black;
+}
+
+.table-bordered .td:nth-of-type(3n) {
+	border-right: 3px solid black;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+

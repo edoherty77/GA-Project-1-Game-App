@@ -54,15 +54,16 @@ const solutionArray = [
  	//from 0 to 9, create rows
  	for(let i = 0; i < 9; i++){
  		let row = document.createElement("tr")
- 		
+
 
  		// From 0 to 9, create columns
  		for(let j = 0; j < 9; j++){
  			let cell = document.createElement("td")
-
+ 			cell.className = "td"
  			// Create divs for each cell
  			let square = document.createElement("button")
- 			square.className = "test"
+ 			square.style.width = "26px"
+ 			square.style.height = "30px"
  			 
   			// Set button's value and text to be number from solution array		
  			square.setAttribute("value", solutionArray[i][j]) 
@@ -93,21 +94,29 @@ const clearByDifficulty = (square) => {
 	easy.addEventListener("click", function(){
 		if(square.value % 2 == 0){
 			square.innerText = " "
+			square.style.width = "26px"
+			square.style.height = "30px"
 		}
 	})
 	medium.addEventListener("click", function(){
 		if(square.value % 2 == 0 || square.value % 4 == 0){
 			square.innerText = " "
+			square.style.width = "26px"
+			square.style.height = "30px"
 		}
 	})
 	hard.addEventListener("click", function(){
 		if(square.value % 2 == 0 || square.value % 3 == 0){
 			square.innerText = " "
+			square.style.width = "26px"
+			square.style.height = "30px"
 		}
 	})
 	expert.addEventListener("click", function(){
 		if(square.value % 2 == 0 || square.value % 3 == 0 || square.value % 4 == 0){
 			square.innerText = " "
+			square.style.width = "26px"
+			square.style.height = "30px"
 		}
 	})
 }
