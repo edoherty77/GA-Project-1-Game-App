@@ -1,6 +1,7 @@
 // Variables / Cached Elements
 const footer = document.querySelector("footer")
-
+const tableBody = document.querySelector("#table-body")
+const gameTable = document.querySelector("#game-table") 
 
 
 // Creat solution arrays to check user's answers
@@ -33,7 +34,100 @@ const easySolutionArray = [
  		//push each button into footer section of html
  		footer.appendChild(numButton)
  	}
-	
  }
 
  createNumButtons()
+
+
+ // Set up squares (inputs) for the game board
+
+ const createSquares = () => {
+
+
+ 	//from 0 to 9, create rows
+ 	for(let i = 0; i < 9; i++){
+ 		let row = document.createElement("tr")
+ 		
+
+ 		// From 0 to 9, create columns
+ 		for(let j = 0; j < 9; j++){
+ 			let cell = document.createElement("td")
+
+ 			// Create divs for each cell
+ 			let square = document.createElement("div")
+
+ 			square.innerHTML = easySolutionArray[i][j]
+
+ 			
+ 			console.log(gameTable)
+			
+ 		
+
+ 			// Append square divs to each cell, and then each cell to each row
+ 			cell.appendChild(square)
+ 			row.appendChild(cell)
+ 		}
+
+ 		// Append each row to our table
+ 		tableBody.appendChild(row)
+
+ 	}
+ }
+
+
+
+// const deleteRandomCell = (i, j) => {
+// 	if(i % 2 === 0 && j % 2 === 0){
+
+// 	}
+// }
+
+
+
+// const applyRandomNum = (square) => {
+// 	for(let k = 0; k < easySolutionArray.length; k++){
+// 		for(q = 0; q < easySolutionArray.length; q++){
+// 			let numbers = easySolutionArray[k][q]
+// 			let input = document.createElement("input")
+// 			input.type = "number"
+// 			input.setAttribute("value", numbers)
+// 			input.name = numbers
+			
+// 			let label = document.createElement("label")
+// 			label.htmlFor = numbers
+// 			label.appendChild(document.createTextNode(numbers))
+
+// 			let p = document.createElement("p")
+
+// 			// p.appendChild(input)
+// 			p.appendChild(label)
+// 			square.appendChild(p)
+			
+// 		}
+// 	}
+// }
+
+// applyRandomNum(square)
+createSquares()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

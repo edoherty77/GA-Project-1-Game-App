@@ -9,7 +9,7 @@
 <body>
 	<h1>Evan's Sudoku</h1>
 
-	<div id="game">
+	<div id="container">
 		<header>
 			<button class="btn" id="start-pause">Start</button>
 		</header>
@@ -19,13 +19,15 @@
 			<button class="btn">Hard</button>
 			<button class="btn">Expert</button>
 		</section>
-		<section id="stats">
+		<section id="mistakes-time">
 			<p id="mistakes">Mistakes: 0/3</p>
 			<p id="timer">Time: 5:00</p>
 		</section>
-		<div id="game-board">
-			
-		</div>
+		<table class="table-bordered" id="game-table">
+			<tbody id="table-body">
+				
+			</tbody>
+		</table>
 		<section class="buttons" id="action-buttons">
 			<button class="btn">Undo</button>
 			<button class="btn">Notes</button>
