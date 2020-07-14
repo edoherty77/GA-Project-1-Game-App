@@ -21,6 +21,13 @@ h1 {
 	opacity: .8;
 }
 
+
+/* Disable start button */
+/*#start-pause:disabled, #start-pause[disabled]{
+	border: 1px solid blue;
+}*/
+
+
 /* Size and center the game board*/
 #game-table {
 	text-align: center;
@@ -39,17 +46,14 @@ h1 {
 /* Create thicker border every 3 columns and rows*/
 
 tr:nth-of-type(3n) {
-	
 	border-bottom: 3px solid black;
-	
 }
 
 tr {
-	 
 	border-right: 3px solid black;
 	border-left: 3px solid black;
-
 }
+
 tr:first-child{
 	border-top: 3px solid black;
 }
@@ -58,10 +62,13 @@ tr:first-child{
 	border-right: 3px solid black;
 }
 
+/*/////////////////////////////////////////////////////*/
 
 
-
-
+/* Toggle display for the game table */
+#game-table {
+	display: none;
+}
 
 
 

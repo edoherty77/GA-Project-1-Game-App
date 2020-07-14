@@ -6,6 +6,8 @@ const easy = document.querySelector("#easy")
 const medium = document.querySelector("#medium")
 const hard = document.querySelector("#hard")
 const expert = document.querySelector("#expert")
+const mistakeCount = document.querySelector("#mistakeCount")
+const startAndPause = document.querySelector("#start-pause")
 
 let answer;
 let squarePicked;
@@ -24,6 +26,37 @@ const solutionArray = [
 ]
 
 
+startAndPause.disabled = true;
+
+// Create start function
+// Once player chooses a difficulty and then presses start, the createSquares function will be called with the appropriate difficulty
+// The time will also start running as well
+
+const start = () => {
+	startAndPause.addEventListener("click", function(){
+		toggleElements()
+	})
+	
+}
+
+
+// Show and hide game table and toggle pause and start button
+const toggleElements = () => {
+	if(startAndPause.innerText === "Start"){
+		startAndPause.innerText = "Pause"
+	} else {
+		startAndPause.innerText = "Start"
+	}
+	if(gameTable.style.display === "block"){
+		gameTable.style.display = "none"
+	} else {
+		gameTable.style.display = "block"
+	}
+	
+}
+
+
+
 //Create buttons 1-9 for user to choose from
  const createNumButtons = () => {
  	//Loop 1-9 to create buttons with corresponding values
@@ -31,6 +64,7 @@ const solutionArray = [
  		const numButton = document.createElement("button")
  		numButton.textContent = i
  		numButton.setAttribute("value", i)
+ 		numButton.setAttribute("id", "btn"+i)
 
  		//Give the buttons some style and room
  		numButton.className = "btn btn-primary"
@@ -66,10 +100,13 @@ const solutionArray = [
  			square.style.height = "30px"
  			 
   			// Set button's value and text to be number from solution array		
- 			square.setAttribute("value", solutionArray[i][j]) 
+ 			square.setAttribute("value", solutionArray[i][j])
+ 			 
  			square.innerText = solutionArray[i][j]
+ 			randomNumAssignment(square)
  			
-		
+
+			
  			// Append square divs to each cell, and then each cell to each row
  			cell.appendChild(square)
  			row.appendChild(cell)
@@ -77,8 +114,10 @@ const solutionArray = [
  			// Call clearByDifficulty function to clear appropriate amount of cell
  			clearByDifficulty(square)
 
-
+ 			// Call the getSquareValue function to obtain the value of square selected by user
  			getSquareValue(square)
+
+						
  		}
 
  		// Append each row to our table
@@ -87,78 +126,94 @@ const solutionArray = [
  	}
  }
 
+const randomNumAssignment = (square) => {
+	const randomNum = Math.floor(Math.random() * 100) + 1
+	square.setAttribute("random", randomNum)
+}
 
 
 // Add event listeners for each difficulty button, which will clear the appropriate amount of squares
 const clearByDifficulty = (square) => {
 	easy.addEventListener("click", function(){
-		if(square.value % 2 == 0){
+		if(square.getAttribute("random") % 2 == 0){
 			square.innerText = " "
 			square.style.width = "26px"
 			square.style.height = "30px"
+			startAndPause.disabled = false;
 		}
 	})
 	medium.addEventListener("click", function(){
-		if(square.value % 2 == 0 || square.value % 4 == 0){
+		if(square.getAttribute("random") % 2 == 0 || square.getAttribute("random")% 4 == 0){
 			square.innerText = " "
 			square.style.width = "26px"
 			square.style.height = "30px"
+			startAndPause.disabled = false;
 		}
 	})
 	hard.addEventListener("click", function(){
-		if(square.value % 2 == 0 || square.value % 3 == 0){
+		if(square.getAttribute("random") % 2 == 0 || square.getAttribute("random") % 3 == 0){
 			square.innerText = " "
 			square.style.width = "26px"
 			square.style.height = "30px"
+			startAndPause.disabled = false;
 		}
 	})
 	expert.addEventListener("click", function(){
-		if(square.value % 2 == 0 || square.value % 3 == 0 || square.value % 4 == 0){
+		if(square.getAttribute("random") % 2 == 0 || square.getAttribute("random") % 3 == 0 || square.getAttribute("random") % 4 == 0){
 			square.innerText = " "
 			square.style.width = "26px"
 			square.style.height = "30px"
+			startAndPause.disabled = false;
 		}
 	})
 }
+
+
+
+
+
 
 
 // On the event of a square clicked
 const getSquareValue = (square) => {
+	// Set global variable "squarePicked" to the clicked square
 	square.addEventListener("click", function(){
-		squarePicked = square.value
-		console.log(square.value)
-		console.log(squarePicked)
-
-		// User can choose # from the bottom
-
-		// If # value = square value
-			// Fill square with black #
-		// Else 
-			// Fill with red #
-			// Mistakes++
-	})	
+		squarePicked = square
+	})
 }
 
 // Get answer chosen from the user
 const getAnswer = (numButton) => {
+
+	// Set the global variable "answer" to the value of the bottom number chosen
 	numButton.addEventListener("click", function(){
+
 		answer = numButton.value
-		console.log(numButton.value)
-		console.log(answer)
+		
+		if(squarePicked.value === answer){
+			squarePicked.innerText = answer
+		}else {
+			squarePicked.innerText = answer
+			squarePicked.style.color = "red"
+			markMistakes()
+		}
 	})
+}
+
+const markMistakes = () => {
+	num = 1
+	if(mistakeCount.innerText = "0"){
+		mistakeCount.innerText = num
+		num++
+	} 
+	
 }
 
 
 
-
-// const compare = () => {
-// 	console.log(getAnswer())
-// }
-
-
 createNumButtons()
 createSquares()
-// compare()
+start()
 
 
 
