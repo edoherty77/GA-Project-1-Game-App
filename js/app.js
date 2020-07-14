@@ -2,11 +2,16 @@
 const footer = document.querySelector("footer")
 const tableBody = document.querySelector("#table-body")
 const gameTable = document.querySelector("#game-table") 
+const easy = document.querySelector("#easy")
+const medium = document.querySelector("#medium")
+const hard = document.querySelector("#hard")
+const expert = document.querySelector("#expert")
 
-
+let answer;
+let squarePicked;
 // Creat solution arrays to check user's answers
 
-const easySolutionArray = [
+const solutionArray = [
 [5, 2, 7, 9, 4, 6, 1, 3, 8],
 [8, 9, 4, 1, 3, 5, 2, 7, 6],
 [1, 6, 3, 7, 2, 8, 9, 4, 5],
@@ -33,10 +38,12 @@ const easySolutionArray = [
 
  		//push each button into footer section of html
  		footer.appendChild(numButton)
+
+ 		getAnswer(numButton)
  	}
  }
 
- createNumButtons()
+
 
 
  // Set up squares (inputs) for the game board
@@ -54,23 +61,23 @@ const easySolutionArray = [
  			let cell = document.createElement("td")
 
  			// Create divs for each cell
- 			let square = document.createElement("div")
+ 			let square = document.createElement("button")
+ 			square.className = "test"
+ 			 
+  			// Set button's value and text to be number from solution array		
+ 			square.setAttribute("value", solutionArray[i][j]) 
+ 			square.innerText = solutionArray[i][j]
  			
- 			
-  			
- 			randomNum(square)
-
- 		
 		
- 			square.innerHTML = easySolutionArray[i][j]
- 			
- 			clearRandomSquareEasy(square)
-			
- 		
-
  			// Append square divs to each cell, and then each cell to each row
  			cell.appendChild(square)
  			row.appendChild(cell)
+
+ 			// Call clearByDifficulty function to clear appropriate amount of cell
+ 			clearByDifficulty(square)
+
+
+ 			getSquareValue(square)
  		}
 
  		// Append each row to our table
@@ -81,46 +88,68 @@ const easySolutionArray = [
 
 
 
-const randomNum = (square) => {
-	let randomNumber = Math.floor(Math.random() * 100) + 1
-	square.className = randomNumber
-
+// Add event listeners for each difficulty button, which will clear the appropriate amount of squares
+const clearByDifficulty = (square) => {
+	easy.addEventListener("click", function(){
+		if(square.value % 2 == 0){
+			square.innerText = " "
+		}
+	})
+	medium.addEventListener("click", function(){
+		if(square.value % 2 == 0 || square.value % 4 == 0){
+			square.innerText = " "
+		}
+	})
+	hard.addEventListener("click", function(){
+		if(square.value % 2 == 0 || square.value % 3 == 0){
+			square.innerText = " "
+		}
+	})
+	expert.addEventListener("click", function(){
+		if(square.value % 2 == 0 || square.value % 3 == 0 || square.value % 4 == 0){
+			square.innerText = " "
+		}
+	})
 }
 
 
-const clearRandomSquareEasy = (square) => {
-	if(square.className % 2 == 0){
-		square.innerHTML = ""
-	}
+// On the event of a square clicked
+const getSquareValue = (square) => {
+	square.addEventListener("click", function(){
+		squarePicked = square.value
+		console.log(square.value)
+		console.log(squarePicked)
+
+		// User can choose # from the bottom
+
+		// If # value = square value
+			// Fill square with black #
+		// Else 
+			// Fill with red #
+			// Mistakes++
+	})	
+}
+
+// Get answer chosen from the user
+const getAnswer = (numButton) => {
+	numButton.addEventListener("click", function(){
+		answer = numButton.value
+		console.log(numButton.value)
+		console.log(answer)
+	})
 }
 
 
-// const applyRandomNum = (square) => {
-// 	for(let k = 0; k < easySolutionArray.length; k++){
-// 		for(q = 0; q < easySolutionArray.length; q++){
-// 			let numbers = easySolutionArray[k][q]
-// 			let input = document.createElement("input")
-// 			input.type = "number"
-// 			input.setAttribute("value", numbers)
-// 			input.name = numbers
-			
-// 			let label = document.createElement("label")
-// 			label.htmlFor = numbers
-// 			label.appendChild(document.createTextNode(numbers))
 
-// 			let p = document.createElement("p")
 
-// 			// p.appendChild(input)
-// 			p.appendChild(label)
-// 			square.appendChild(p)
-			
-// 		}
-// 	}
+// const compare = () => {
+// 	console.log(getAnswer())
 // }
 
-// applyRandomNum(square)
-createSquares()
 
+createNumButtons()
+createSquares()
+// compare()
 
 
 
