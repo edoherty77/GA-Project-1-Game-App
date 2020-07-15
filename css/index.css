@@ -88,7 +88,7 @@ h1 {
 .game-squares {
 	border: none;
 	transition-property: border;
-	transition-duration: .25s;
+	transition-duration: .35s;
 }
 
 
