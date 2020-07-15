@@ -30,17 +30,75 @@ h1 {
 
 }
 
-#start-pause, #easy, #medium, #hard, #expert {
+
+/* Style all buttons on game board with transitions on focus and hover*/
+.button {
+	
 	padding: 0;
 	margin: 0 10px;
+	background: none;
+	transition-property: background;
+	transition-duration: .7s;
+	
 }
 
-/* Size and center the game board as well as hide it to start*/
+.button:focus {
+	outline: none;
+	box-shadow: none;
+	background: rgb(45, 152, 181);
+}
+
+
+.button:hover:enabled {
+	background: rgb(45, 152, 181);
+}
+
+
+/*////////////////////////////////////////////////////////*/
+
+/* Size and center the game board */
 #game-table {
 	text-align: center;
 	display: table;
-	
 }
+
+
+/* Styling the game squares */
+.td .game-squares {
+	width: 26px;
+    height: 30px;
+ 	font-family: 'Anton', sans-serif;
+}
+
+/* Style numbers at the bottom of the page*/
+.numButton {
+	margin: 10px 10px;
+ 	background: rgb(45, 152, 181);
+ 	border: none;
+ 	transition-property: color box-shadow;
+ 	transition-duration: .7s;
+}
+
+.numButton:hover {
+	background: rgb(45, 152, 181);
+	color: rgb(255, 248, 194);
+	box-shadow: 4px 4px 5px rgb(255, 248, 194);
+}
+
+.game-squares {
+	border: none;
+	transition-property: border;
+	transition-duration: .25s;
+}
+
+
+/* Style the outline that appears on the square when clicked on */
+.game-squares:focus, .game-squares:hover {
+	border: 2px dashed rgb(56, 88, 194);
+	box-shadow: none;
+}
+
+
 
 /* Style td's width to match its height */
 .td {
@@ -59,7 +117,6 @@ h1 {
 
 
 /* Create thicker border every 3 columns and rows*/
-
 tr:nth-of-type(3n) {
 	border-bottom: 3px solid black;
 }
@@ -88,7 +145,7 @@ tr:first-child{
 
 
 
-/* Style for the greeting */
+/* Style for the greeting and paused message*/
 #greeting, #paused-message {
 	font-size: 30px;
 	margin: 40px;

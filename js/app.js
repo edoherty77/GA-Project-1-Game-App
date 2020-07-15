@@ -11,8 +11,10 @@ const startAndPause = document.querySelector("#start-pause")
 const greeting = document.querySelector("#greeting")
 const pausedMessage = document.querySelector("#paused-message")
 
+// Global variables storing values for squares picked and bottom buttons picked
 let answer;
 let squarePicked;
+
 // Creat solution arrays to check user's answers
 
 const solutionArray = [
@@ -77,11 +79,11 @@ const toggleElements = () => {
  		const numButton = document.createElement("button")
  		numButton.textContent = i
  		numButton.setAttribute("value", i)
- 		numButton.setAttribute("id", "btn"+i)
+ 		
 
  		//Give the buttons some style and room
- 		numButton.className = "btn btn-primary"
- 		numButton.style.margin = "10px 10px"
+ 		numButton.classList.add("btn", "btn-primary", "numButton")
+ 		
 
  		//push each button into footer section of html
  		footer.appendChild(numButton)
@@ -109,10 +111,8 @@ const toggleElements = () => {
  			cell.className = "td"
  			// Create divs for each cell
  			let square = document.createElement("button")
- 			square.className = "btn"
- 			square.style.width = "26px"
- 			square.style.height = "30px"
- 			square.style.fontFamily = "Anton, sans-serif"
+ 			square.classList.add("btn", "game-squares")
+ 			
  			
 
  			 
