@@ -1,13 +1,16 @@
 body {
 	background-image: url(https://images.unsplash.com/photo-1559825481-12a05cc00344?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60);
-	/*background-repeat: no-repeat;
-	background-size: cover;*/
+	background-repeat: no-repeat;
+	background-size: cover;
+	font-family: 'Patrick Hand', cursive;
 }
 
 /* Set the header to the middle of the page*/
 h1 {
-	text-align: center;
+	text-align: center; 
 }
+
+
 
 /* Set the main div that holds everything to flex with a border*/
 #container {
@@ -18,22 +21,32 @@ h1 {
 	border: 2px solid black;
 	width: 700px;
 	margin: auto;
-	opacity: .8;
+	opacity: .7;
 }
 
+/* Increase font size for some of the text on the game board*/
+.board-text {
+	font-size: 20px;
 
-/* Disable start button */
-/*#start-pause:disabled, #start-pause[disabled]{
-	border: 1px solid blue;
-}*/
+}
 
+#start-pause, #easy, #medium, #hard, #expert {
+	padding: 0;
+	margin: 0 10px;
+}
 
-/* Size and center the game board*/
+/* Size and center the game board as well as hide it to start*/
 #game-table {
 	text-align: center;
 	display: table;
-	width: 290px;
+	
 }
+
+/* Style td's width to match its height */
+.td {
+	width: 39px;
+}
+
 
 
 /* Space out mistakes and time display */
@@ -42,6 +55,8 @@ h1 {
 	width: 800px;
 	justify-content: space-around;
 }
+
+
 
 /* Create thicker border every 3 columns and rows*/
 
@@ -65,13 +80,19 @@ tr:first-child{
 /*/////////////////////////////////////////////////////*/
 
 
-/* Toggle display for the game table */
-#game-table {
+/* Toggle display for the game table and paused message */
+#game-table, #paused-message{
+	font-size: 20px;
 	display: none;
 }
 
 
 
+/* Style for the greeting */
+#greeting, #paused-message {
+	font-size: 30px;
+	margin: 40px;
+}
 
 
 

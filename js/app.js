@@ -8,6 +8,8 @@ const hard = document.querySelector("#hard")
 const expert = document.querySelector("#expert")
 const mistakeCount = document.querySelector("#mistakeCount")
 const startAndPause = document.querySelector("#start-pause")
+const greeting = document.querySelector("#greeting")
+const pausedMessage = document.querySelector("#paused-message")
 
 let answer;
 let squarePicked;
@@ -25,7 +27,7 @@ const solutionArray = [
 [2, 4, 9, 5, 8, 1, 3, 6, 7]
 ]
 
-
+// Have the start button disabled when the page loads
 startAndPause.disabled = true;
 
 // Create start function
@@ -34,6 +36,11 @@ startAndPause.disabled = true;
 
 const start = () => {
 	startAndPause.addEventListener("click", function(){
+
+		// Hide the greeting message once the start button has been pressed
+		greeting.style.display = "none"
+
+		// Call toggle function to toggle elements
 		toggleElements()
 	})
 	
@@ -42,11 +49,17 @@ const start = () => {
 
 // Show and hide game table and toggle pause and start button
 const toggleElements = () => {
+
+	// Toggle start/pause button and paused message
 	if(startAndPause.innerText === "Start"){
 		startAndPause.innerText = "Pause"
+		pausedMessage.style.display = "none"
 	} else {
 		startAndPause.innerText = "Start"
+		pausedMessage.style.display = "inline"
 	}
+
+	// Toggle game table to display and hide
 	if(gameTable.style.display === "block"){
 		gameTable.style.display = "none"
 	} else {
@@ -96,14 +109,18 @@ const toggleElements = () => {
  			cell.className = "td"
  			// Create divs for each cell
  			let square = document.createElement("button")
+ 			square.className = "btn"
  			square.style.width = "26px"
  			square.style.height = "30px"
+ 			square.style.fontFamily = "Anton, sans-serif"
+ 			
+
  			 
   			// Set button's value and text to be number from solution array		
  			square.setAttribute("value", solutionArray[i][j])
- 			 
  			square.innerText = solutionArray[i][j]
- 			randomNumAssignment(square)
+
+
  			
 
 			
@@ -111,25 +128,34 @@ const toggleElements = () => {
  			cell.appendChild(square)
  			row.appendChild(cell)
 
+
+			// Call random number function
+ 			randomNumAssignment(square)
+
  			// Call clearByDifficulty function to clear appropriate amount of cell
  			clearByDifficulty(square)
 
  			// Call the getSquareValue function to obtain the value of square selected by user
- 			getSquareValue(square)
-
-						
+ 			getSquareValue(square)			
  		}
-
  		// Append each row to our table
  		tableBody.appendChild(row)
-
  	}
  }
 
+
+
+
+// Create a function to generate a random number. Assign this number to each square, thereby randomly hiding squares for each difficulty
 const randomNumAssignment = (square) => {
 	const randomNum = Math.floor(Math.random() * 100) + 1
 	square.setAttribute("random", randomNum)
 }
+
+
+
+
+
 
 
 // Add event listeners for each difficulty button, which will clear the appropriate amount of squares
@@ -174,6 +200,7 @@ const clearByDifficulty = (square) => {
 
 
 
+
 // On the event of a square clicked
 const getSquareValue = (square) => {
 	// Set global variable "squarePicked" to the clicked square
@@ -181,6 +208,7 @@ const getSquareValue = (square) => {
 		squarePicked = square
 	})
 }
+
 
 // Get answer chosen from the user
 const getAnswer = (numButton) => {
@@ -200,6 +228,7 @@ const getAnswer = (numButton) => {
 	})
 }
 
+// Create function to keep track of user mistakes
 const markMistakes = () => {
 	num = 1
 	if(mistakeCount.innerText = "0"){

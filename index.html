@@ -2,8 +2,11 @@
 <html>
 <head>
 	<title>Sudoku</title>
-	<link rel="stylesheet" type="text/css" href="css/index.css">
+	<link href="https://fonts.googleapis.com/css2?family=Patrick+Hand&display=swap" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css2?family=Anton&display=swap" rel="stylesheet">
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="css/index.css">
+	
 	<script defer type="text/javascript" src="js/app.js"></script>
 </head>
 <body>
@@ -11,27 +14,29 @@
 
 	<div id="container">
 		<header>
-			<button class="btn" id="start-pause">Start</button>
+			<button class="btn board-text" id="start-pause">Start</button>
 		</header>
 		<section class="buttons" id="difficulty">
-			<button id="easy" class="btn">Easy</button>
-			<button id="medium" class="btn">Medium</button>
-			<button id="hard" class="btn">Hard</button>
-			<button id="expert" class="btn">Expert</button>
+			<button id="easy" class="btn board-text">Easy</button>
+			<button id="medium" class="btn board-text">Medium</button>
+			<button id="hard" class="btn board-text">Hard</button>
+			<button id="expert" class="btn board-text">Expert</button>
 		</section>
 		<section id="mistakes-time">
-			<p id="mistakes">Mistakes: <span id="mistakeCount">0</span>/3</p>
-			<p id="timer">Time: 5:00</p>
+			<p id="mistakes" class="board-text">Mistakes: <span id="mistakeCount">0</span>/3</p>
+			<p id="timer" class="board-text">Time: 5:00</p>
 		</section>
+			<div id="greeting">Choose a difficulty, then press start. Have fun!</div>
+			<div id="paused-message">Game Paused. Press START to resume</div>
 		<table class="table-bordered" id="game-table">
 			<tbody id="table-body">
 				
 			</tbody>
 		</table>
 		<section class="buttons" id="action-buttons">
-			<button class="btn">Undo</button>
-			<button class="btn">Notes</button>
-			<button class="btn">Hint</button>
+			<button class="btn board-text">Undo</button>
+			<button class="btn board-text">Notes</button>
+			<button class="btn board-text">Hint</button>
 		</section>
 		<footer class="buttons" id="numbers">
 			
