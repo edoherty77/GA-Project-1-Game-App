@@ -7,7 +7,7 @@ body {
 
 /* Set the header to the middle of the page*/
 h1 {
-	text-align: center; 
+	text-align: center;
 }
 
 
@@ -21,6 +21,7 @@ h1 {
 	border: 2px solid black;
 	width: 700px;
 	margin: auto;
+	height: 528px;
 	opacity: .7;
 }
 
@@ -56,12 +57,6 @@ h1 {
 
 /*////////////////////////////////////////////////////////*/
 
-/* Size and center the game board */
-#game-table {
-	text-align: center;
-	display: table;
-}
-
 
 /* Styling the game squares */
 .td .game-squares {
@@ -82,11 +77,13 @@ h1 {
 .numButton:hover {
 	background: rgb(45, 152, 181);
 	color: rgb(255, 248, 194);
-	box-shadow: 4px 4px 5px rgb(255, 248, 194);
+	box-shadow: 8px 8px 14px rgb(255, 248, 194);
 }
 
 .game-squares {
 	border: none;
+	width: 26px;
+	height: 30px;
 	transition-property: border;
 	transition-duration: .35s;
 }
@@ -136,6 +133,11 @@ tr:first-child{
 
 /*/////////////////////////////////////////////////////*/
 
+/* Size and center the game board */
+#game-table {
+	text-align: center;
+	display: table;
+}
 
 /* Toggle display for the game table and paused message */
 #game-table, #paused-message{
@@ -143,12 +145,19 @@ tr:first-child{
 	display: none;
 }
 
+.hidden {
+	display: none;
+}
 
+.visuallyhidden {
+	opacity: 0;
+}
 
 /* Style for the greeting and paused message*/
 #greeting, #paused-message {
 	font-size: 30px;
 	margin: 40px;
+	color: rgb(45, 152, 181);
 }
 
 
