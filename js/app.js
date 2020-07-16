@@ -1,17 +1,5 @@
-// Create an array of game puzzles
-const solutionArray = [
-[5, 2, 7, 9, 4, 6, 1, 3, 8],
-[8, 9, 4, 1, 3, 5, 2, 7, 6],
-[1, 6, 3, 7, 2, 8, 9, 4, 5],
-[3, 8, 2, 6, 9, 4, 7, 5, 1],
-[4, 7, 5, 8, 1, 2, 6, 9, 3],
-[9, 1, 6, 3, 5, 7, 4, 8, 2],
-[7, 3, 8, 2, 6, 9, 5, 1, 4],
-[6, 5, 1, 4, 7, 3, 8, 2, 9],
-[2, 4, 9, 5, 8, 1, 3, 6, 7]
-]
-
-
+// GLOBAL VARIABLES
+////////////////////////////////////////////////
 
 // Variables / Cached Elements
 const footer = document.querySelector("footer")
@@ -21,11 +9,15 @@ const easy = document.querySelector("#easy")
 const medium = document.querySelector("#medium")
 const hard = document.querySelector("#hard")
 const expert = document.querySelector("#expert")
+const mistakeText = document.querySelector("#mistakeText")
 const mistakeCount = document.querySelector("#mistakeCount")
 const startAndPause = document.querySelector("#start-pause")
 const greeting = document.querySelector("#greeting")
 const pausedMessage = document.querySelector("#paused-message")
-const hintBtn = document.querySelector("#hint")
+const hintBtn = document.querySelector("#hintBtn")
+const undoBtn = document.querySelector("#undoBtn")
+const notesBtn = document.querySelector("#notesBtn")
+
 
 // Global variables storing values for squares picked and bottom buttons picked
 let answer;
@@ -34,16 +26,28 @@ let time = 30;
 let squareIndex = 1
 let randomIndex;
 
+///////////////////////*************************//////////////////////
 
 
+
+// STYLES SET WEHN PAGE LOADS
+/////////////////////////////////////////////////////////
 
 // Have the start button disabled when the page loads
 startAndPause.disabled = true;
+undoBtn.disabled = true;
+undoBtn.style.background = "gray"
+///////////////////////*************************//////////////////////
+
+
+
+// START BUTTON FUNCTIONALITY
+////////////////////////////////////////////////////////////
+
 
 // Create start function
 // Once player chooses a difficulty and then presses start, the createSquares function will be called with the appropriate difficulty
 // The time will also start running as well
-
 const start = () => {
 	startAndPause.addEventListener("click", function(){
 
@@ -57,31 +61,13 @@ const start = () => {
 		// setTimer()
 	})
 }
+///////////////////////*************************//////////////////////
 
 
 
-// Show and hide game table and toggle pause and start button
-const toggleElements = () => {
-	// Toggle start/pause button and paused message
-	if(startAndPause.innerText === "Start"){
-		startAndPause.innerText = "Pause"
-		pausedMessage.style.display = "none"
-	} else {
-		startAndPause.innerText = "Start"
-		pausedMessage.style.display = "inline"
-	}
 
-	// Toggle game table to display and hide
-	if(gameTable.style.display === "block"){
-		gameTable.style.display = "none"
-	} else {
-		gameTable.style.display = "block"
-		
-	}
-	
-}
-
-
+// CREATING ANSWER BUTTONS FOR THE BOTTOM OF THE PAGE
+/////////////////////////////////////////////////////////////////
 
 //Create buttons 1-9 for user to choose from
  const createNumButtons = () => {
@@ -100,9 +86,27 @@ const toggleElements = () => {
  		getAnswerValue(numButton)
  	}
  }
+///////////////////////*************************//////////////////////
 
 
 
+
+
+// CREATING SQUARES FOR GAME BOARD
+/////////////////////////////////////////////////////
+
+// Create an array of game puzzles
+const solutionArray = [
+[5, 2, 7, 9, 4, 6, 1, 3, 8],
+[8, 9, 4, 1, 3, 5, 2, 7, 6],
+[1, 6, 3, 7, 2, 8, 9, 4, 5],
+[3, 8, 2, 6, 9, 4, 7, 5, 1],
+[4, 7, 5, 8, 1, 2, 6, 9, 3],
+[9, 1, 6, 3, 5, 7, 4, 8, 2],
+[7, 3, 8, 2, 6, 9, 5, 1, 4],
+[6, 5, 1, 4, 7, 3, 8, 2, 9],
+[2, 4, 9, 5, 8, 1, 3, 6, 7]
+]
 
  // Set up squares (inputs) for the game board
  const createSquares = () => {
@@ -118,7 +122,7 @@ const toggleElements = () => {
  			let square = document.createElement("button")
  			square.classList.add("btn", "game-squares")
  			
- 			 
+
   			// Set button's value and text to be number from solution array		
  			square.setAttribute("value", solutionArray[i][j])
  			square.innerText = solutionArray[i][j]
@@ -130,21 +134,11 @@ const toggleElements = () => {
 
  			
 
-			// Call random number function
+			// Call functions
  			assignRandomNum(square)
-
- 			// Call clearByDifficulty function to clear appropriate amount of cell
  			clearByDifficulty(square)
-
- 			// Call the getSquareValue function to obtain the value of square selected by user
- 			getSquareValue(square)	
- 			
-
- 			assignSquareIndex(square)
- 			
- 			// console.log(typeof square.name)
- 		
-
+ 			getSquareValue(square)				
+			assignSquareIndex(square)
  			getHint(square)		
  		}
  		// Append each row to our table
@@ -152,8 +146,13 @@ const toggleElements = () => {
  	}
  }
 
+///////////////////////*************************//////////////////////
 
 
+
+
+// ASSIGNING NUMBER FUNCTIONS TO SQUARES
+////////////////////////////////////////////////////////////
 
 // Create a function to generate a random number. Assign this number to each square, thereby randomly hiding squares for each difficulty
 const assignRandomNum = (square) => {
@@ -165,11 +164,17 @@ const assignRandomNum = (square) => {
 // Create function to assign numbers 1-81 to each square
 const assignSquareIndex = (square) => {
 	square.setAttribute("name", squareIndex)
-	squareIndex++
-	
+	squareIndex++	
 }
 
+///////////////////////*************************//////////////////////
 
+
+
+
+
+//DIFFICULTY FUNCTIONALITY
+////////////////////////////////////////////////////////////////
 
 // Add event listeners for each difficulty button, which will clear the appropriate amount of squares
 const clearByDifficulty = (square) => {
@@ -179,6 +184,8 @@ const clearByDifficulty = (square) => {
 			startAndPause.disabled = false;
 		}
 	})
+
+
 	medium.addEventListener("click", function(){
 		if(square.getAttribute("random") % 2 == 0 || square.getAttribute("random")% 4 == 0){
 			square.innerText = " "
@@ -199,8 +206,14 @@ const clearByDifficulty = (square) => {
 	})
 }
 
+///////////////////////*************************//////////////////////
 
 
+
+
+
+// GETTING VALUES FROM SQUARES AND  CLICK EVENTS
+///////////////////////////////////////////////////////////////
 
 // On the event of a square clicked
 const getSquareValue = (square) => {
@@ -209,6 +222,7 @@ const getSquareValue = (square) => {
 		squarePicked = square
 	})
 }
+
 
 
 // Get answer chosen from the user
@@ -220,14 +234,74 @@ const getAnswerValue = (numButton) => {
 		
 		if(squarePicked.value === answer){
 			squarePicked.innerText = answer
-		}else {
+		} else {
 			squarePicked.innerText = answer
 			squarePicked.style.color = "red"
 			markMistakes()
+			// numButton.disabled = true;
+			undoBtn.disabled = false;
+			undoBtn.style.background = "none"
 		}
 	})
 }
 
+createNumButtons()
+///////////////////////*************************//////////////////////
+
+
+
+
+// SHOW AND HIDE ELEMENTS FUNCTIONALITY
+/////////////////////////////////////////////////////////////
+
+// Show and hide game table and toggle pause and start button
+const toggleElements = () => {
+	// Toggle start/pause button and paused message
+	if(startAndPause.innerText === "Start"){
+		startAndPause.innerText = "Pause"
+		pausedMessage.style.display = "none"
+	} else {
+		startAndPause.innerText = "Start"
+		pausedMessage.style.display = "inline"
+	}
+
+	//Create an array of elements I want to be toggles
+	let array = [notesBtn, gameTable, mistakeText, undoBtn, hintBtn]
+
+	// Loop through array and set each as the argument for toggleMultiple function
+	for(let i = 0; i < array.length; i++){
+		helperFunction(array[i])
+	}
+}
+
+
+// Create helper function that will toggle multiple elements
+const helperFunction = (element) => {
+	if(element.style.display === "inline"){
+		element.style.display = "none"
+	} else {
+		element.style.display = "inline"
+	}
+}
+
+///////////////////////*************************//////////////////////
+
+
+
+
+//UNDO BUTTON FUNCTIONALITY
+/////////////////////////////////////////////////////
+
+// Create undo function 
+const undoWrongAnswer = () => {
+	undoBtn.addEventListener("click", function(){
+		squarePicked.innerHTML = " "
+		undoBtn.disabled = true
+		undoBtn.style.background = "gray"
+	})
+}
+
+undoWrongAnswer()
 
 // Create function to keep track of user mistakes
 const markMistakes = () => {
@@ -237,11 +311,13 @@ const markMistakes = () => {
 		num++
 	} 
 }
+///////////////////////*************************//////////////////////
 
 
+
+//HINT BUTTON FUNCTIONALITY
 ///////////////////////////////////////////////
-//CODE FOR HINT BUTTON FUNCTIONALITY
-///////////////////////////////////////////////
+
 
 // Create function to come up with a random number 1-81
 const generateRandomIndex = () => {
@@ -250,26 +326,29 @@ const generateRandomIndex = () => {
 
 // Create function to find a square thats empty, and then fill it with it's value
 const checkSquareEmptiness = (square) => {
+
 	// Find the square whose name = random number
 	if(parseInt(square.name) == randomIndex){
 		let hintSquare = square
 
 		// If square is empty
-			
+		
 		if(hintSquare.innerHTML == " "){
 			// make the square.innerHTML = square.value
-			square.innerHTML = square.value
-			square.style.color = 'rgb(3, 252, 182)'
-			console.log(square)
+			hintSquare.innerHTML = hintSquare.value
+			hintSquare.style.color = 'rgb(3, 252, 182)'
+			console.log(hintSquare)
+			
 		} else {
 			// If that square is not empty epeat the function
-			console.log(square)
+			console.log(hintSquare)
 			generateRandomIndex()
 			console.log(randomIndex)
 			checkSquareEmptiness(square)
 		}
 	} 
 }
+
 
 
 // Create function for hintBtn click event to run above code
@@ -285,6 +364,29 @@ const getHint = (square) => {
 	})	
 }
 
+///////////////////////*************************//////////////////////
+
+
+
+// NOTE BUTTON FUNCTIONALITY
+///////////////////////////////////////////////////////////
+ 
+//Notes function
+// When clicked, all empty buttons will be on display none
+// When a square is clicked, a div is created
+// The user can then click the bottom buttons, which their value will appear inside created div
+// To remove number from the div from the square that is selected, the user can click the number at the bottom and it will toggle off
+// Create and erase function
+// To get rid of all numbers typed in, notes mode is off. the user can click on the square and press the erase button, 
+// or click on a number, and the number will replace the div
+
+///////////////////////*************************//////////////////////
+
+
+
+
+// TIMER FUNCTIONALITY
+/////////////////////////////////////////////
 
 
 // const setTimer = () => {
@@ -301,14 +403,14 @@ const getHint = (square) => {
 // 	}, 1000)
 // }
 
+///////////////////////*************************//////////////////////
 
-createNumButtons()
+
 createSquares()
 generateRandomIndex()
 start()
 
 
-console.log(randomIndex)
 
 
 

@@ -109,6 +109,7 @@ h1 {
 	display: flex;
 	width: 800px;
 	justify-content: space-around;
+	height: 40px;
 }
 
 
@@ -140,7 +141,7 @@ tr:first-child{
 }
 
 /* Toggle display for the game table and paused message */
-#game-table, #paused-message{
+#game-table, #paused-message, #mistakeText, #notesBtn, #undoBtn, #hintBtn {
 	font-size: 20px;
 	display: none;
 }
@@ -156,11 +157,16 @@ tr:first-child{
 /* Style for the greeting and paused message*/
 #greeting, #paused-message {
 	font-size: 30px;
-	margin: 40px;
+	margin: 160px 40px;
 	color: rgb(45, 152, 181);
 }
 
+#action-buttons {
+	margin-top: 10px;
+}
 
-
+footer {
+	margin-bottom: 10px;
+}
 
 
