@@ -363,6 +363,7 @@ const getAnswerValue = (answerButton) => {
 		if(squarePicked.value === answer){
 			squarePicked.innerText = answer
 			successSound.play()
+			squarePicked.disabled = true;
 		} else {
 			failureSound.play()
 			squarePicked.innerText = answer
@@ -389,6 +390,7 @@ const undoWrongAnswer = () => {
 	undoBtn.addEventListener("click", function(){
 		undoSound.play()
 		squarePicked.innerHTML = " "
+		squarePicked.style.color = "rgb(33, 37, 41)"
 		undoBtn.disabled = true
 		undoBtn.style.background = "gray"
 	})
