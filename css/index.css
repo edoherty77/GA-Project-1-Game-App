@@ -25,10 +25,27 @@ h1 {
 	opacity: .7;
 }
 
+
+header {
+	width: 700px;
+}
+
 /* Increase font size for some of the text on the game board*/
 .board-text {
 	font-size: 20px;
 
+}
+
+
+#newGameBtn {
+	font-size: 20px;
+
+}
+
+/*Increase font size for start and pause button*/
+#startBtn, #pauseBtn{
+	font-size: 30px;
+	margin-left: 222px;
 }
 
 
@@ -161,7 +178,7 @@ tr:first-child{
 /* Style for the greeting and paused message*/
 #greeting, #paused-message, #times-up {
 	font-size: 30px;
-	margin: 160px 40px;
+	margin: 140px 40px;
 	color: rgb(45, 152, 181);
 }
 

@@ -13,15 +13,16 @@
 	<h1>Evan's Sudoku</h1>
 
 	<div id="container">
-		<header>
-			<button class="btn startTog" id="startBtn">Start</button>
-			<button class="btn pauseTog" id="pauseBtn">Pause</button>
+		<header id="header">
+			<button class="btn button" id="newGameBtn">New Game</button>
+			<button class="btn button startTog" id="startBtn">Start</button>
+			<button class="btn button pauseTog" id="pauseBtn">Pause</button>
 		</header>
 		<section id="difficulty">
-			<button id="easy" class="btn board-text button">Easy</button>
-			<button id="medium" class="btn board-text button">Medium</button>
-			<button id="hard" class="btn board-text button">Hard</button>
-			<button id="expert" class="btn board-text button">Expert</button>
+			<button id="easy" class="btn diff-buttons board-text button">Easy</button>
+			<button id="medium" class="btn diff-buttons board-text button">Medium</button>
+			<button id="hard" class="btn diff-buttons board-text button">Hard</button>
+			<button id="expert" class="btn diff-buttons board-text button">Expert</button>
 		</section>
 		<section id="mistakes-time">
 			<p id="mistakeText" class="board-text mistakeTog">Mistakes: <span id="mistakeCount">0</span>/3</p>

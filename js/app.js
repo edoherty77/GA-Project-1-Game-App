@@ -5,14 +5,15 @@
 const footer = document.querySelector("footer")
 const tableBody = document.querySelector("#table-body")
 const gameTable = document.querySelector("#game-table") 
-const easy = document.querySelector("#easy")
-const medium = document.querySelector("#medium")
-const hard = document.querySelector("#hard")
-const expert = document.querySelector("#expert")
+const easyBtn = document.querySelector("#easy")
+const mediumBtn = document.querySelector("#medium")
+const hardBtn = document.querySelector("#hard")
+const expertBtn = document.querySelector("#expert")
 const mistakeText = document.querySelector("#mistakeText")
 const mistakeCount = document.querySelector("#mistakeCount")
 const startBtn = document.querySelector("#startBtn")
 const pauseBtn =  document.querySelector("#pauseBtn")
+const newGameButton = document.querySelector("#newGameButton")
 const greeting = document.querySelector("#greeting")
 const pausedMessage = document.querySelector("#paused-message")
 const hintBtn = document.querySelector("#hintBtn")
@@ -37,6 +38,7 @@ let randomIndex;
 
 // Have the start button disabled when the page loads
 startBtn.disabled = true;
+newGameBtn.disabled = true
 undoBtn.disabled = true;
 undoBtn.style.background = "gray"
 ///////////////////////*************************//////////////////////
@@ -53,7 +55,7 @@ undoBtn.style.background = "gray"
 // The time will also start running as well
 const start = () => {
 	startBtn.addEventListener("click", function(){
-
+		newGameBtn.disabled = false;
 		startBtn.style.display = "none"
 
 		pausedMessage.style.display = "none"
@@ -93,10 +95,7 @@ const pause = () => {
 		
 		pausedMessage.style.display = "inline"
 
-		let answerButtons = document.querySelectorAll(".answerButton")
-		for(let i = 0; i < answerButtons.length; i++){
-			answerButtons[i].classList.toggle("show-hide")
-		}
+		
 
 		// Set elements classList to .hide
 		undoBtn.classList.toggle("show-hide")
@@ -109,10 +108,63 @@ const pause = () => {
 		})
 }
 
-
-
 /////////////////////*************************//////////////////////
 
+
+//NEW GAME FUNCTIONALITY
+///////////////////////////////////////////////////////////////////////
+
+
+
+const startNewGame = () => {
+	newGameBtn.addEventListener("click", function(){
+		let newGameAnswer = prompt("Are you sure you want to start a new game?")
+
+		
+		
+		if(newGameAnswer === "yes"){
+			// toggle all elements to hide or appear(difficulty buttons, paused message, start button)
+			// Appear
+			greeting.style.display = "inline"
+			startBtn.style.display = "inline"
+			startBtn.disabled = true
+			newGameBtn.disabled = true
+
+			let diffButtons = document.querySelectorAll(".diff-buttons")
+			for(let j = 0; j < diffButtons.length; j++){
+				diffButtons[j].disabled = false
+				diffButtons[j].style.background = "none"			}
+
+
+			// HIDE
+			let answerButtons = document.querySelectorAll(".answerButton")
+			for(let i = 0; i < answerButtons.length; i++){
+				answerButtons[i].classList.toggle("show-hide")
+			}
+
+			undoBtn.classList.toggle("show-hide")
+			hintBtn.classList.toggle("show-hide")
+			notesBtn.classList.toggle("show-hide")
+			gameTable.classList.toggle("show-hide")
+			mistakeText.classList.toggle("show-hide")
+			pauseBtn.classList.toggle("show-hide")
+			
+			//all difficulty buttons are enabled with no background color
+			console.log("noice")
+		}
+		// else
+			//toggle elements to show and start the timer
+	})
+
+}
+
+
+startNewGame()
+
+
+
+
+////////////////////****************************////////////////////////
 
 
 
@@ -229,42 +281,56 @@ const assignSquareIndex = (square) => {
 
 // Add event listeners for each difficulty button, which will clear the appropriate amount of squares
 const clearByDifficulty = (square) => {
-	easy.addEventListener("click", function(){
+	easyBtn.addEventListener("click", function(e){
 		if(square.getAttribute("random") % 2 == 0){
 			square.innerText = " "
 			startBtn.disabled = false;
 		}
-		medium.disabled = true
+		this.style.background = "rgb(45, 152, 181)"
+		mediumBtn.disabled = true
 		hard.disabled = true
 		expert.disabled = true
 		time = 100;
 	})
 
 
-	medium.addEventListener("click", function(){
+	mediumBtn.addEventListener("click", function(){
 		if(square.getAttribute("random") % 2 == 0 || square.getAttribute("random")% 4 == 0){
 			square.innerText = " "
 			startBtn.disabled = false;
 		}
+		easy.disabled = true
+		hard.disabled = true
+		expert.disabled = true
 		time = 200
 	})
-	hard.addEventListener("click", function(){
+	hardBtn.addEventListener("click", function(){
 		if(square.getAttribute("random") % 2 == 0 || square.getAttribute("random") % 3 == 0){
 			square.innerText = " "
 			startBtn.disabled = false;
 		}
+
+		medium.disabled = true
+		easy.disabled = true
+		expert.disabled = true
 		time = 300
 	})
-	expert.addEventListener("click", function(){
+	expertBtn.addEventListener("click", function(){
 		if(square.getAttribute("random") % 2 == 0 || square.getAttribute("random") % 3 == 0 || square.getAttribute("random") % 4 == 0){
 			square.innerText = " "
 			startBtn.disabled = false;
 		}
+		medium.disabled = true
+		hard.disabled = true
+		easy.disabled = true
 		time = 400
 	})
 }
 
 ///////////////////////*************************//////////////////////
+
+
+
 
 
 
