@@ -34,7 +34,6 @@ h1 {
 
 /* Style all buttons on game board with transitions on focus and hover*/
 .button {
-	
 	padding: 0;
 	margin: 0 10px;
 	background: none;
@@ -66,15 +65,16 @@ h1 {
 }
 
 /* Style numbers at the bottom of the page*/
-.numButton {
-	margin: 10px 10px;
+.answerButton {
+	height: 38px;
+	margin: 5px 10px 10px;
  	background: rgb(45, 152, 181);
  	border: none;
  	transition-property: color box-shadow;
  	transition-duration: .7s;
 }
 
-.numButton:hover {
+.answerButton:hover {
 	background: rgb(45, 152, 181);
 	color: rgb(255, 248, 194);
 	box-shadow: 8px 8px 14px rgb(255, 248, 194);
@@ -135,34 +135,38 @@ tr:first-child{
 /*/////////////////////////////////////////////////////*/
 
 /* Size and center the game board */
-#game-table {
+.tableTog {
 	text-align: center;
 	display: table;
 }
 
 /* Toggle display for the game table and paused message */
-#game-table, #paused-message, #mistakeText, #notesBtn, #undoBtn, #hintBtn {
+#paused-message, #times-up {
 	font-size: 20px;
 	display: none;
 }
 
-.hidden {
+.pauseTog, .undoTog, .notesTog, .hintTog, .tableTog, .mistakeTog, .answerButton {
 	display: none;
 }
 
-.visuallyhidden {
-	opacity: 0;
+.show-hide {
+	display: inline;
 }
 
+
+
+
+
 /* Style for the greeting and paused message*/
-#greeting, #paused-message {
+#greeting, #paused-message, #times-up {
 	font-size: 30px;
 	margin: 160px 40px;
 	color: rgb(45, 152, 181);
 }
 
 #action-buttons {
-	margin-top: 10px;
+	margin-top: 5px;
 }
 
 footer {

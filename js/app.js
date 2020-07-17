@@ -11,18 +11,20 @@ const hard = document.querySelector("#hard")
 const expert = document.querySelector("#expert")
 const mistakeText = document.querySelector("#mistakeText")
 const mistakeCount = document.querySelector("#mistakeCount")
-const startAndPause = document.querySelector("#start-pause")
+const startBtn = document.querySelector("#startBtn")
+const pauseBtn =  document.querySelector("#pauseBtn")
 const greeting = document.querySelector("#greeting")
 const pausedMessage = document.querySelector("#paused-message")
 const hintBtn = document.querySelector("#hintBtn")
 const undoBtn = document.querySelector("#undoBtn")
 const notesBtn = document.querySelector("#notesBtn")
+const timesUp = document.querySelector("#times-up")
 
 
 // Global variables storing values for squares picked and bottom buttons picked
 let answer;
 let squarePicked;
-let time = 30;
+let time;
 let squareIndex = 1
 let randomIndex;
 
@@ -34,10 +36,11 @@ let randomIndex;
 /////////////////////////////////////////////////////////
 
 // Have the start button disabled when the page loads
-startAndPause.disabled = true;
+startBtn.disabled = true;
 undoBtn.disabled = true;
 undoBtn.style.background = "gray"
 ///////////////////////*************************//////////////////////
+
 
 
 
@@ -49,19 +52,66 @@ undoBtn.style.background = "gray"
 // Once player chooses a difficulty and then presses start, the createSquares function will be called with the appropriate difficulty
 // The time will also start running as well
 const start = () => {
-	startAndPause.addEventListener("click", function(){
+	startBtn.addEventListener("click", function(){
+
+		startBtn.style.display = "none"
+
+		pausedMessage.style.display = "none"
+
+		// Loop through answer buttons
+		let answerButtons = document.querySelectorAll(".answerButton")
+		for(let i = 0; i < answerButtons.length; i++){
+			answerButtons[i].classList.toggle("show-hide")
+		}
+
+		// Set elements classList to .show
+		undoBtn.classList.toggle("show-hide")
+		hintBtn.classList.toggle("show-hide")
+		notesBtn.classList.toggle("show-hide")
+		gameTable.classList.toggle("show-hide")
+		mistakeText.classList.toggle("show-hide")
+		pauseBtn.classList.toggle("show-hide")
 
 		// Hide the greeting message once the start button has been pressed
 		greeting.style.display = "none"
 
-		// Call toggle function to toggle elements
-		toggleElements()
+		
 
 		// Call the setTimer function
 		// setTimer()
 	})
 }
-///////////////////////*************************//////////////////////
+/////////////////////*************************//////////////////////
+
+
+// PAUSE BUTTON FUNCTIONALITY
+//////////////////////////////////////////////////////////////
+
+const pause = () => {
+	pauseBtn.addEventListener("click", function(){
+		startBtn.style.display = "inline"
+		
+		pausedMessage.style.display = "inline"
+
+		let answerButtons = document.querySelectorAll(".answerButton")
+		for(let i = 0; i < answerButtons.length; i++){
+			answerButtons[i].classList.toggle("show-hide")
+		}
+
+		// Set elements classList to .hide
+		undoBtn.classList.toggle("show-hide")
+		hintBtn.classList.toggle("show-hide")
+		notesBtn.classList.toggle("show-hide")
+		gameTable.classList.toggle("show-hide")
+		mistakeText.classList.toggle("show-hide")
+		pauseBtn.classList.toggle("show-hide")
+
+		})
+}
+
+
+
+/////////////////////*************************//////////////////////
 
 
 
@@ -70,23 +120,24 @@ const start = () => {
 /////////////////////////////////////////////////////////////////
 
 //Create buttons 1-9 for user to choose from
- const createNumButtons = () => {
+ const createAnswerButtons = () => {
  	//Loop 1-9 to create buttons with corresponding values
  	for(let i = 1; i < 10; i++){
- 		const numButton = document.createElement("button")
- 		numButton.textContent = i
- 		numButton.setAttribute("value", i)
+ 		const answerButton = document.createElement("button")
+ 		answerButton.textContent = i
+ 		answerButton.setAttribute("value", i)
  		
  		//Give the buttons some style and room
- 		numButton.classList.add("btn", "btn-primary", "numButton")
+ 		answerButton.classList.add("btn", "btn-primary", "answerButton")
  		
  		//push each button into footer section of html
- 		footer.appendChild(numButton)
+ 		footer.appendChild(answerButton)
 
- 		getAnswerValue(numButton)
+ 		getAnswerValue(answerButton)
  	}
  }
 ///////////////////////*************************//////////////////////
+
 
 
 
@@ -181,28 +232,35 @@ const clearByDifficulty = (square) => {
 	easy.addEventListener("click", function(){
 		if(square.getAttribute("random") % 2 == 0){
 			square.innerText = " "
-			startAndPause.disabled = false;
+			startBtn.disabled = false;
 		}
+		medium.disabled = true
+		hard.disabled = true
+		expert.disabled = true
+		time = 100;
 	})
 
 
 	medium.addEventListener("click", function(){
 		if(square.getAttribute("random") % 2 == 0 || square.getAttribute("random")% 4 == 0){
 			square.innerText = " "
-			startAndPause.disabled = false;
+			startBtn.disabled = false;
 		}
+		time = 200
 	})
 	hard.addEventListener("click", function(){
 		if(square.getAttribute("random") % 2 == 0 || square.getAttribute("random") % 3 == 0){
 			square.innerText = " "
-			startAndPause.disabled = false;
+			startBtn.disabled = false;
 		}
+		time = 300
 	})
 	expert.addEventListener("click", function(){
 		if(square.getAttribute("random") % 2 == 0 || square.getAttribute("random") % 3 == 0 || square.getAttribute("random") % 4 == 0){
 			square.innerText = " "
-			startAndPause.disabled = false;
+			startBtn.disabled = false;
 		}
+		time = 400
 	})
 }
 
@@ -226,11 +284,11 @@ const getSquareValue = (square) => {
 
 
 // Get answer chosen from the user
-const getAnswerValue = (numButton) => {
+const getAnswerValue = (answerButton) => {
 	// Set the global variable "answer" to the value of the bottom number chosen
-	numButton.addEventListener("click", function(){
+	answerButton.addEventListener("click", function(){
 
-		answer = numButton.value
+		answer = answerButton.value
 		
 		if(squarePicked.value === answer){
 			squarePicked.innerText = answer
@@ -245,45 +303,7 @@ const getAnswerValue = (numButton) => {
 	})
 }
 
-createNumButtons()
-///////////////////////*************************//////////////////////
-
-
-
-
-// SHOW AND HIDE ELEMENTS FUNCTIONALITY
-/////////////////////////////////////////////////////////////
-
-// Show and hide game table and toggle pause and start button
-const toggleElements = () => {
-	// Toggle start/pause button and paused message
-	if(startAndPause.innerText === "Start"){
-		startAndPause.innerText = "Pause"
-		pausedMessage.style.display = "none"
-	} else {
-		startAndPause.innerText = "Start"
-		pausedMessage.style.display = "inline"
-	}
-
-	//Create an array of elements I want to be toggles
-	let array = [notesBtn, gameTable, mistakeText, undoBtn, hintBtn]
-
-	// Loop through array and set each as the argument for toggleMultiple function
-	for(let i = 0; i < array.length; i++){
-		helperFunction(array[i])
-	}
-}
-
-
-// Create helper function that will toggle multiple elements
-const helperFunction = (element) => {
-	if(element.style.display === "inline"){
-		element.style.display = "none"
-	} else {
-		element.style.display = "inline"
-	}
-}
-
+createAnswerButtons()
 ///////////////////////*************************//////////////////////
 
 
@@ -389,19 +409,18 @@ const getHint = (square) => {
 /////////////////////////////////////////////
 
 
-// const setTimer = () => {
-// 	const timer = setInterval(() => {
-// 		time--;
-// 		// if(startAndPause.innerText = "Start"){
-// 		// 	clearInterval(timer)
-// 		// }
-// 		if(time === 0){
-// 			clearInterval(timer)
-// 			alert("game over dickhead")
-// 		}
-// 		document.querySelector("#timer").innerHTML = ("Time: " + time)
-// 	}, 1000)
-// }
+const setTimer = () => {
+	const timer = setInterval(() => {
+		time--;
+		if(time === 0){
+			clearInterval(timer)
+			toggleElements()
+			pausedMessage.style.display = "none"
+			timesUp.style.display = "inline"
+		}
+		document.querySelector("#timer").innerHTML = ("Time: " + time)
+	}, 1000)
+}
 
 ///////////////////////*************************//////////////////////
 
@@ -409,6 +428,7 @@ const getHint = (square) => {
 createSquares()
 generateRandomIndex()
 start()
+pause()
 
 
 

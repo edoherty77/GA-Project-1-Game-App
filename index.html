@@ -14,7 +14,8 @@
 
 	<div id="container">
 		<header>
-			<button class="btn board-text button" id="start-pause">Start</button>
+			<button class="btn startTog" id="startBtn">Start</button>
+			<button class="btn pauseTog" id="pauseBtn">Pause</button>
 		</header>
 		<section id="difficulty">
 			<button id="easy" class="btn board-text button">Easy</button>
@@ -23,22 +24,23 @@
 			<button id="expert" class="btn board-text button">Expert</button>
 		</section>
 		<section id="mistakes-time">
-			<p id="mistakeText" class="board-text">Mistakes: <span id="mistakeCount">0</span>/3</p>
+			<p id="mistakeText" class="board-text mistakeTog">Mistakes: <span id="mistakeCount">0</span>/3</p>
 			<p id="timer" class="board-text"></p>
-		</section>
+		</section id="messages">
 			<div id="greeting">Choose a difficulty, then press start. Have fun!</div>
 			<div id="paused-message">Game Paused. Press <span>START</span> to resume</div>
-		<table class="table-bordered" id="game-table">
+			<div id="times-up">Time's up. You suck</div>
+		<table class="table-bordered tableTog" id="game-table">
 			<tbody id="table-body">
 				
 			</tbody>
 		</table>
 		<section id="action-buttons">
-			<button id="undoBtn" class="btn board-text button">Undo</button>
-			<button id="notesBtn" class="btn board-text button">Notes</button>
-			<button id="hintBtn" class="btn board-text button">Hint</button>
+			<button id="undoBtn" class="btn board-text button undoTog">Undo</button>
+			<button id="notesBtn" class="btn board-text button notesTog">Notes</button>
+			<button id="hintBtn" class="btn board-text button hintTog">Hint</button>
 		</section>
-		<footer id="numbers">
+		<footer id="answer-numbers">
 			
 		</footer>
 	</div>
