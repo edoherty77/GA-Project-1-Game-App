@@ -163,7 +163,7 @@ tr:first-child{
 	display: none;
 }
 
-.pauseTog, .undoTog, .notesTog, .hintTog, .tableTog, .mistakeTog, .answerButton {
+.pauseTog, .undoTog, .notesTog, .hintTog, .tableTog, .mistakeTog, .answerButton, #new-game-prompt {
 	display: none;
 }
 
@@ -176,7 +176,7 @@ tr:first-child{
 
 
 /* Style for the greeting and paused message*/
-#greeting, #paused-message, #times-up {
+#greeting, #paused-message, #times-up, #new-game-prompt{
 	font-size: 30px;
 	margin: 140px 40px;
 	color: rgb(45, 152, 181);

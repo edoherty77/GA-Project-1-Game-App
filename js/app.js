@@ -1,3 +1,8 @@
+$('#myModal').on('shown.bs.modal', function () {
+  $('#myInput').trigger('focus')
+})
+
+
 // GLOBAL VARIABLES
 ////////////////////////////////////////////////
 
@@ -20,7 +25,9 @@ const hintBtn = document.querySelector("#hintBtn")
 const undoBtn = document.querySelector("#undoBtn")
 const notesBtn = document.querySelector("#notesBtn")
 const timesUp = document.querySelector("#times-up")
-
+const newGamePrompt = document.querySelector("#new-game-prompt")
+const promptYesBtn = document.querySelector("#promptYesBtn")
+const promptNoBtn = document.querySelector("#promptNoBtn")
 
 // Global variables storing values for squares picked and bottom buttons picked
 let answer;
@@ -30,7 +37,6 @@ let squareIndex = 1
 let randomIndex;
 
 ///////////////////////*************************//////////////////////
-
 
 
 // STYLES SET WEHN PAGE LOADS
@@ -55,24 +61,15 @@ undoBtn.style.background = "gray"
 // The time will also start running as well
 const start = () => {
 	startBtn.addEventListener("click", function(){
-		newGameBtn.disabled = false;
+		
 		startBtn.style.display = "none"
-
+		newGameBtn.disabled = true
 		pausedMessage.style.display = "none"
 
-		// Loop through answer buttons
-		let answerButtons = document.querySelectorAll(".answerButton")
-		for(let i = 0; i < answerButtons.length; i++){
-			answerButtons[i].classList.toggle("show-hide")
-		}
+		// newGameBtn.disabled = true
 
 		// Set elements classList to .show
-		undoBtn.classList.toggle("show-hide")
-		hintBtn.classList.toggle("show-hide")
-		notesBtn.classList.toggle("show-hide")
-		gameTable.classList.toggle("show-hide")
-		mistakeText.classList.toggle("show-hide")
-		pauseBtn.classList.toggle("show-hide")
+		toggleElements()
 
 		// Hide the greeting message once the start button has been pressed
 		greeting.style.display = "none"
@@ -95,15 +92,10 @@ const pause = () => {
 		
 		pausedMessage.style.display = "inline"
 
-		
+		newGameBtn.disabled = false;
 
 		// Set elements classList to .hide
-		undoBtn.classList.toggle("show-hide")
-		hintBtn.classList.toggle("show-hide")
-		notesBtn.classList.toggle("show-hide")
-		gameTable.classList.toggle("show-hide")
-		mistakeText.classList.toggle("show-hide")
-		pauseBtn.classList.toggle("show-hide")
+		toggleElements()
 
 		})
 }
@@ -118,52 +110,71 @@ const pause = () => {
 
 const startNewGame = () => {
 	newGameBtn.addEventListener("click", function(){
-		let newGameAnswer = prompt("Are you sure you want to start a new game?")
+		// Pause the time
+
+		// Hide elements
+		startBtn.disabled = true
+		pausedMessage.style.display = "none"
+		newGamePrompt.style.display = "inline"
 
 		
-		
-		if(newGameAnswer === "yes"){
+		// If yes, have greeting, start button appear. Disable startBtn/newGameButton. Enable diffbuttons
+		promptYesBtn.addEventListener("click", function(){
 			// toggle all elements to hide or appear(difficulty buttons, paused message, start button)
+
+			newGamePrompt.style.display = "none"
+
 			// Appear
 			greeting.style.display = "inline"
 			startBtn.style.display = "inline"
 			startBtn.disabled = true
 			newGameBtn.disabled = true
 
+			// Enable with no background color
 			let diffButtons = document.querySelectorAll(".diff-buttons")
 			for(let j = 0; j < diffButtons.length; j++){
 				diffButtons[j].disabled = false
-				diffButtons[j].style.background = "none"			}
-
-
-			// HIDE
-			let answerButtons = document.querySelectorAll(".answerButton")
-			for(let i = 0; i < answerButtons.length; i++){
-				answerButtons[i].classList.toggle("show-hide")
+				diffButtons[j].style.background = "none"			
 			}
+		})
 
-			undoBtn.classList.toggle("show-hide")
-			hintBtn.classList.toggle("show-hide")
-			notesBtn.classList.toggle("show-hide")
-			gameTable.classList.toggle("show-hide")
-			mistakeText.classList.toggle("show-hide")
-			pauseBtn.classList.toggle("show-hide")
+		promptNoBtn.addEventListener("click", function(){
+			// Bring user back to pause menu
 			
-			//all difficulty buttons are enabled with no background color
-			console.log("noice")
-		}
-		// else
-			//toggle elements to show and start the timer
+			startBtn.style.display = "inline"
+			startBtn.disabled = false
+			pausedMessage.style.display = "inline"
+			
+			newGamePrompt.style.display = "none"
+			
+			// startBtn.style.display = "none"
+		})	
+			 
+			
 	})
 
 }
 
 
+		
+
+
+
+
+const toggleElements = () => {
+	let answerButtons = document.querySelectorAll(".answerButton")
+	for(let i = 0; i < answerButtons.length; i++){
+		answerButtons[i].classList.toggle("show-hide")
+	}
+	undoBtn.classList.toggle("show-hide")
+	hintBtn.classList.toggle("show-hide")
+	notesBtn.classList.toggle("show-hide")
+	gameTable.classList.toggle("show-hide")
+	mistakeText.classList.toggle("show-hide")
+	pauseBtn.classList.toggle("show-hide")
+}
+
 startNewGame()
-
-
-
-
 ////////////////////****************************////////////////////////
 
 
