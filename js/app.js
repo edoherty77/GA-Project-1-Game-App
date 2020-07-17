@@ -1,7 +1,3 @@
-$('#myModal').on('shown.bs.modal', function () {
-  $('#myInput').trigger('focus')
-})
-
 
 // GLOBAL VARIABLES
 ////////////////////////////////////////////////
@@ -36,6 +32,11 @@ let time;
 let squareIndex = 1
 let randomIndex;
 
+let undoSound = new Audio("./sounds/undo-sound.wav")
+let successSound = new Audio("./sounds/success-sound.wav")
+let failureSound = new Audio("./sounds/failure-sound.wav")
+let appearSound = new Audio("./sounds/appear-sound.wav")
+let pauseSound = new Audio("./sounds/pause-sound.wav")
 ///////////////////////*************************//////////////////////
 
 
@@ -59,22 +60,20 @@ undoBtn.style.background = "gray"
 // Create start function
 // Once player chooses a difficulty and then presses start, the createSquares function will be called with the appropriate difficulty
 // The time will also start running as well
-const start = () => {
+const startGame = () => {
 	startBtn.addEventListener("click", function(){
+		appearSound.play()
 		
 		startBtn.style.display = "none"
 		newGameBtn.disabled = true
 		pausedMessage.style.display = "none"
 
-		// newGameBtn.disabled = true
 
 		// Set elements classList to .show
 		toggleElements()
 
 		// Hide the greeting message once the start button has been pressed
 		greeting.style.display = "none"
-
-		
 
 		// Call the setTimer function
 		// setTimer()
@@ -86,8 +85,9 @@ const start = () => {
 // PAUSE BUTTON FUNCTIONALITY
 //////////////////////////////////////////////////////////////
 
-const pause = () => {
+const pauseGame = () => {
 	pauseBtn.addEventListener("click", function(){
+		pauseSound.play()
 		startBtn.style.display = "inline"
 		
 		pausedMessage.style.display = "inline"
@@ -144,22 +144,14 @@ const startNewGame = () => {
 			startBtn.style.display = "inline"
 			startBtn.disabled = false
 			pausedMessage.style.display = "inline"
-			
 			newGamePrompt.style.display = "none"
 			
-			// startBtn.style.display = "none"
-		})	
-			 
-			
+		})		
 	})
-
 }
 
 
 		
-
-
-
 
 const toggleElements = () => {
 	let answerButtons = document.querySelectorAll(".answerButton")
@@ -174,7 +166,7 @@ const toggleElements = () => {
 	pauseBtn.classList.toggle("show-hide")
 }
 
-startNewGame()
+
 ////////////////////****************************////////////////////////
 
 
@@ -199,6 +191,7 @@ startNewGame()
  		getAnswerValue(answerButton)
  	}
  }
+
 ///////////////////////*************************//////////////////////
 
 
@@ -369,7 +362,9 @@ const getAnswerValue = (answerButton) => {
 		
 		if(squarePicked.value === answer){
 			squarePicked.innerText = answer
+			successSound.play()
 		} else {
+			failureSound.play()
 			squarePicked.innerText = answer
 			squarePicked.style.color = "red"
 			markMistakes()
@@ -392,6 +387,7 @@ createAnswerButtons()
 // Create undo function 
 const undoWrongAnswer = () => {
 	undoBtn.addEventListener("click", function(){
+		undoSound.play()
 		squarePicked.innerHTML = " "
 		undoBtn.disabled = true
 		undoBtn.style.background = "gray"
@@ -504,9 +500,9 @@ const setTimer = () => {
 
 createSquares()
 generateRandomIndex()
-start()
-pause()
-
+startGame()
+pauseGame()
+startNewGame()
 
 
 

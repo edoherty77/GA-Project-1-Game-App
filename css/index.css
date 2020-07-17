@@ -39,7 +39,6 @@ header {
 
 #newGameBtn {
 	font-size: 20px;
-
 }
 
 /*Increase font size for start and pause button*/
@@ -173,13 +172,21 @@ tr:first-child{
 
 
 
-
-
 /* Style for the greeting and paused message*/
-#greeting, #paused-message, #times-up, #new-game-prompt{
+#greeting, #paused-message, #times-up {
 	font-size: 30px;
-	margin: 140px 40px;
+	margin: 115px 40px;
 	color: rgb(45, 152, 181);
+}
+
+#new-game-prompt {
+	font-size: 30px;
+	margin: 90px 40px;
+	color: rgb(45, 152, 181);
+	text-align: center;
+}
+#promptYesBtn, #promptNoBtn {
+	font-size: 30px;
 }
 
 #action-buttons {

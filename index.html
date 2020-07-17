@@ -4,6 +4,7 @@
 	<title>Sudoku</title>
 	<link href="https://fonts.googleapis.com/css2?family=Patrick+Hand&display=swap" rel="stylesheet">
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 	<link rel="stylesheet" type="text/css" href="css/index.css">
 	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> 
 	<script type="text/javascript" src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
@@ -29,11 +30,11 @@
 			<p id="mistakeText" class="board-text mistakeTog">Mistakes: <span id="mistakeCount">0</span>/3</p>
 			<p id="timer" class="board-text"></p>
 		</section>
-		<div id="new-game-prompt">
+		<section id="new-game-prompt">
 			<p>Are you sure you want to play a new game?</p>
-			<button class="btn button prompt-answer" id="promptYesBtn">Yes</button>
-			<button class="btn button prompt-answer" id="promptNoBtn">No</button>
-		</div>
+			<button class="btn button prompt-answer" id="promptYesBtn"><i class="fa fa-thumbs-up" aria-hidden="true"></i></button>
+			<button class="btn button prompt-answer" id="promptNoBtn"><i class="fa fa-thumbs-down" aria-hidden="true"></i></button>
+		</section>
 		<div id="greeting">Choose a difficulty, then press start. Have fun!</div>
 		<div id="paused-message">Game Paused. Press <span>START</span> to resume</div>
 		<div id="times-up">Time's up. You suck</div>
