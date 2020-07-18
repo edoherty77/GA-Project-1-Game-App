@@ -1,0 +1,16 @@
+Start off with the reason why I decided on creating a sudoku app
+	I'd take the subway to work for 40 min
+	I became good at solving them as I began teaching myself to code
+	I thought, why not create one myself, with the features the way I wanted them.
+
+Show the app first, explaining how it works
+	Pretty much read your readme while showing the app
+
+Once everyone sees the app, go through the code
+Show how I hard coded the answers to a sudoku puzzle
+Then show how I created the grid and added the answers to each individual square
+Then explain my difficulty functionality which made a certain amount of squares to become empty based on difficulty chosen
+	The assign random number function helped with this functionality
+
+Walk through the getSquareValue and getAnswer value functions
+	These were created to see if the user was right or wrong with the answer they chose  

@@ -285,10 +285,13 @@ const assignSquareIndex = (square) => {
 
 // Add event listeners for each difficulty button, which will clear the appropriate amount of squares
 const clearByDifficulty = (square) => {
-	easyBtn.addEventListener("click", function(e){
+	easyBtn.addEventListener("click", function(){
 		if(square.getAttribute("random") % 2 == 0){
 			square.innerText = " "
 			startBtn.disabled = false;
+		} else {
+			square.disabled = true
+			square.style.color = "red"
 		}
 		this.style.background = "rgb(45, 152, 181)"
 		mediumBtn.disabled = true
