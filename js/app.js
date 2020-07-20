@@ -11,7 +11,8 @@ const mediumBtn = document.querySelector("#medium")
 const hardBtn = document.querySelector("#hard")
 const expertBtn = document.querySelector("#expert")
 const mistakeText = document.querySelector("#mistakeText")
-const mistakeCount = document.querySelector("#mistakeCount")
+const mistakeCountDisplay = document.querySelector("#mistakeCountDisplay")
+const mistakesMessage = document.querySelector("#mistakes-message")
 const startBtn = document.querySelector("#startBtn")
 const pauseBtn =  document.querySelector("#pauseBtn")
 const newGameButton = document.querySelector("#newGameButton")
@@ -32,6 +33,7 @@ let squarePicked;
 let time;
 let squareIndex = 1
 let randomIndex;
+let mistakesCount = 0
 
 let undoSound = new Audio("./sounds/undo-sound.wav")
 let successSound = new Audio("./sounds/success-sound.wav")
@@ -148,13 +150,14 @@ const pauseGame = () => {
 
 const startNewGame = () => {
 	newGameBtn.addEventListener("click", function(){
-		// Pause the time
+		clickSound.play()
 
 		// Hide elements
 		startBtn.disabled = true
 		pausedMessage.style.display = "none"
 		newGamePrompt.style.display = "inline"
 		timesUp.style.display = "none"
+		mistakesMessage.style.display = "none"
 
 		
 		// If yes, have greeting, start button appear. Disable startBtn/newGameButton. Enable diffbuttons
@@ -172,12 +175,22 @@ const startNewGame = () => {
 			startBtn.disabled = true
 			newGameBtn.disabled = true
 
-			// Enable with no background color
+			// Enable sqaures with no background color
 			let diffButtons = document.querySelectorAll(".diff-buttons")
 			for(let j = 0; j < diffButtons.length; j++){
 				diffButtons[j].disabled = false
 				diffButtons[j].style.background = "none"			
 			}
+
+			// Enable answer buttons
+			let answerButtons = document.querySelectorAll(".answerButton")
+			for(let i = 0; i < answerButtons.length; i++){
+				answerButtons[i].disabled = false
+			}
+
+			// Reset mistake count		
+			mistakeCountDisplay.innerHTML = 0
+			mistakesCount = 0
 		})
 
 		promptNoBtn.addEventListener("click", function(){
@@ -329,6 +342,7 @@ const assignSquareIndex = (square) => {
 // Add event listeners for each difficulty button, which will clear the appropriate amount of squares
 const clearByDifficulty = (square) => {
 	easyBtn.addEventListener("click", function(e){
+		clickSound.play()
 		if(square.getAttribute("random") % 2 == 0){
 			square.innerText = " "
 			startBtn.disabled = false;
@@ -346,6 +360,7 @@ const clearByDifficulty = (square) => {
 
 
 	mediumBtn.addEventListener("click", function(){
+		clickSound.play()
 		if(square.getAttribute("random") % 2 == 0 || square.getAttribute("random")% 4 == 0){
 			square.innerText = " "
 			startBtn.disabled = false;
@@ -360,6 +375,7 @@ const clearByDifficulty = (square) => {
 		time = 200
 	})
 	hardBtn.addEventListener("click", function(){
+		clickSound.play()
 		if(square.getAttribute("random") % 2 == 0 || square.getAttribute("random") % 3 == 0){
 			square.innerText = " "
 			startBtn.disabled = false;
@@ -375,6 +391,7 @@ const clearByDifficulty = (square) => {
 		time = 300
 	})
 	expertBtn.addEventListener("click", function(){
+		clickSound.play()
 		if(square.getAttribute("random") % 2 == 0 || square.getAttribute("random") % 3 == 0 || square.getAttribute("random") % 4 == 0){
 			square.innerText = " "
 			startBtn.disabled = false;
@@ -464,8 +481,8 @@ createAnswerButtons()
 // Create undo function 
 const undoWrongAnswer = () => {
 	undoBtn.addEventListener("click", function(){
-		clickSound.play()
 		undoSound.play()
+
 		squarePicked.innerHTML = " "
 		squarePicked.style.color = "rgb(33, 37, 41)"
 		// squarePicked.disabled = false
@@ -499,11 +516,18 @@ undoWrongAnswer()
 
 // Create function to keep track of user mistakes
 const markMistakes = () => {
-	num = 1
-	if(mistakeCount.innerText = "0"){
-		mistakeCount.innerText = num
-		num++
-	} 
+	// Increase the mistakesCount variable
+	mistakesCount++
+	// Update the html
+	mistakeCountDisplay.innerHTML = mistakesCount
+
+	// If 3 mistakes are made, end the game
+	if(mistakesCount === 3){
+		toggleElements()
+		newGameBtn.disabled = false
+		timeDisplay.style.display = "none"
+		mistakesMessage.style.display = "inline"
+	}
 }
 ///////////////////////*************************//////////////////////
 
