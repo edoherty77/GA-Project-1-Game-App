@@ -162,7 +162,7 @@ tr:first-child{
 	display: none;
 }
 
-.pauseTog, .undoTog, .notesTog, .hintTog, .tableTog, .mistakeTog, .answerButton, #new-game-prompt {
+#timer, .pauseTog, .undoTog, .notesTog, .hintTog, .tableTog, .mistakeTog, .answerButton, #new-game-prompt {
 	display: none;
 }
 

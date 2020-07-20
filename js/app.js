@@ -24,6 +24,7 @@ const timesUp = document.querySelector("#times-up")
 const newGamePrompt = document.querySelector("#new-game-prompt")
 const promptYesBtn = document.querySelector("#promptYesBtn")
 const promptNoBtn = document.querySelector("#promptNoBtn")
+const timeDisplay = document.querySelector("#timer")
 
 // Global variables storing values for squares picked and bottom buttons picked
 let answer;
@@ -37,6 +38,7 @@ let successSound = new Audio("./sounds/success-sound.wav")
 let failureSound = new Audio("./sounds/failure-sound.wav")
 let appearSound = new Audio("./sounds/appear-sound.wav")
 let pauseSound = new Audio("./sounds/pause-sound.wav")
+let clickSound = new Audio("./sounds/click-sound.wav")
 ///////////////////////*************************//////////////////////
 
 
@@ -48,7 +50,34 @@ startBtn.disabled = true;
 newGameBtn.disabled = true
 undoBtn.disabled = true;
 undoBtn.style.background = "gray"
+
 ///////////////////////*************************//////////////////////
+
+
+
+
+// TIMER FUNCTIONALITY
+////////////////////////////////////////////////////////////
+let isPaused = false
+const timer = setInterval(function() {
+	if(!isPaused){
+		time--;
+	}
+	
+	if(time === 0){
+		clearInterval(timer)
+		toggleElements()
+		pausedMessage.style.display = "none"
+		timesUp.style.display = "inline"
+		newGameBtn.disabled = false
+		mistakeText.style.display = "none"
+		console.log(isPaused)
+	}
+	document.querySelector("#timer").innerHTML = ("Time: " + time)
+	}, 1000)
+
+///////////////////////*************************//////////////////////
+
 
 
 
@@ -61,8 +90,15 @@ undoBtn.style.background = "gray"
 // Once player chooses a difficulty and then presses start, the createSquares function will be called with the appropriate difficulty
 // The time will also start running as well
 const startGame = () => {
-	startBtn.addEventListener("click", function(){
+	startBtn.addEventListener("click", function(e){
+		mistakeText.style.display = "inline"
+		timeDisplay.style.display = "inline"
+		e.preventDefault()
+		isPaused = false
+
+
 		appearSound.play()
+
 		
 		startBtn.style.display = "none"
 		newGameBtn.disabled = true
@@ -76,7 +112,7 @@ const startGame = () => {
 		greeting.style.display = "none"
 
 		// Call the setTimer function
-		// setTimer()
+		
 	})
 }
 /////////////////////*************************//////////////////////
@@ -86,7 +122,9 @@ const startGame = () => {
 //////////////////////////////////////////////////////////////
 
 const pauseGame = () => {
-	pauseBtn.addEventListener("click", function(){
+	pauseBtn.addEventListener("click", function(e){
+		e.preventDefault()
+		isPaused = true
 		pauseSound.play()
 		startBtn.style.display = "inline"
 		
@@ -116,12 +154,16 @@ const startNewGame = () => {
 		startBtn.disabled = true
 		pausedMessage.style.display = "none"
 		newGamePrompt.style.display = "inline"
+		timesUp.style.display = "none"
 
 		
 		// If yes, have greeting, start button appear. Disable startBtn/newGameButton. Enable diffbuttons
 		promptYesBtn.addEventListener("click", function(){
 			// toggle all elements to hide or appear(difficulty buttons, paused message, start button)
+			successSound.play()
 
+			mistakeText.style.display = "none"
+			timeDisplay.style.display = "none"
 			newGamePrompt.style.display = "none"
 
 			// Appear
@@ -141,6 +183,7 @@ const startNewGame = () => {
 		promptNoBtn.addEventListener("click", function(){
 			// Bring user back to pause menu
 			
+			failureSound.play()
 			startBtn.style.display = "inline"
 			startBtn.disabled = false
 			pausedMessage.style.display = "inline"
@@ -162,7 +205,7 @@ const toggleElements = () => {
 	hintBtn.classList.toggle("show-hide")
 	notesBtn.classList.toggle("show-hide")
 	gameTable.classList.toggle("show-hide")
-	mistakeText.classList.toggle("show-hide")
+	
 	pauseBtn.classList.toggle("show-hide")
 }
 
@@ -285,19 +328,20 @@ const assignSquareIndex = (square) => {
 
 // Add event listeners for each difficulty button, which will clear the appropriate amount of squares
 const clearByDifficulty = (square) => {
-	easyBtn.addEventListener("click", function(){
+	easyBtn.addEventListener("click", function(e){
 		if(square.getAttribute("random") % 2 == 0){
 			square.innerText = " "
 			startBtn.disabled = false;
+			square.disabled = false
 		} else {
 			square.disabled = true
-			square.style.color = "red"
+			square.style.color = "#212529"
 		}
 		this.style.background = "rgb(45, 152, 181)"
 		mediumBtn.disabled = true
 		hard.disabled = true
 		expert.disabled = true
-		time = 100;
+		time = 10;
 	})
 
 
@@ -305,6 +349,10 @@ const clearByDifficulty = (square) => {
 		if(square.getAttribute("random") % 2 == 0 || square.getAttribute("random")% 4 == 0){
 			square.innerText = " "
 			startBtn.disabled = false;
+			square.disabled = false
+		} else {
+			square.disabled = true
+			square.style.color = "#212529"
 		}
 		easy.disabled = true
 		hard.disabled = true
@@ -315,6 +363,10 @@ const clearByDifficulty = (square) => {
 		if(square.getAttribute("random") % 2 == 0 || square.getAttribute("random") % 3 == 0){
 			square.innerText = " "
 			startBtn.disabled = false;
+			square.disabled = false
+		} else {
+			square.disabled = true
+			square.style.color = "#212529"
 		}
 
 		medium.disabled = true
@@ -326,6 +378,10 @@ const clearByDifficulty = (square) => {
 		if(square.getAttribute("random") % 2 == 0 || square.getAttribute("random") % 3 == 0 || square.getAttribute("random") % 4 == 0){
 			square.innerText = " "
 			startBtn.disabled = false;
+			square.disabled = false   
+		} else {
+			square.disabled = true 
+			square.style.color = "#212529"
 		}
 		medium.disabled = true
 		hard.disabled = true
@@ -351,6 +407,7 @@ const getSquareValue = (square) => {
 	// Set global variable "squarePicked" to the clicked square
 	square.addEventListener("click", function(){
 		squarePicked = square
+		clickSound.play()
 	})
 }
 
@@ -372,9 +429,25 @@ const getAnswerValue = (answerButton) => {
 			squarePicked.innerText = answer
 			squarePicked.style.color = "red"
 			markMistakes()
-			// numButton.disabled = true;
+			
+			// Enable undo button
 			undoBtn.disabled = false;
 			undoBtn.style.background = "none"
+
+			// Disable elements
+			let answerButtons = document.querySelectorAll(".answerButton")
+			hintBtn.disabled = true
+			notesBtn.disabled = true
+			for(let i = 0; i < answerButtons.length; i++){
+				answerButtons[i].disabled = true
+			}
+
+			// Disable all squares
+			let squares = document.querySelectorAll(".game-squares")
+			for(let j = 0; j < squares.length; j++){
+				squares[j].disabled = true
+			}
+
 		}
 	})
 }
@@ -391,11 +464,34 @@ createAnswerButtons()
 // Create undo function 
 const undoWrongAnswer = () => {
 	undoBtn.addEventListener("click", function(){
+		clickSound.play()
 		undoSound.play()
 		squarePicked.innerHTML = " "
 		squarePicked.style.color = "rgb(33, 37, 41)"
+		// squarePicked.disabled = false
 		undoBtn.disabled = true
 		undoBtn.style.background = "gray"
+
+
+
+		// Enable elements
+		let answerButtons = document.querySelectorAll(".answerButton")
+		hintBtn.disabled = false
+		notesBtn.disabled = false
+
+		for(let i = 0; i < answerButtons.length; i++){
+			answerButtons[i].disabled = false
+		}
+
+		let squares = document.querySelectorAll(".game-squares")
+		
+		for(let j = 0; j < squares.length; j++){
+			squarePicked.style.background = "none"
+			if(squares[j].innerHTML === " "){
+				squares[j].disabled = false
+			}
+		
+		}
 	})
 }
 
@@ -436,6 +532,7 @@ const checkSquareEmptiness = (square) => {
 			hintSquare.innerHTML = hintSquare.value
 			hintSquare.style.color = 'rgb(3, 252, 182)'
 			console.log(hintSquare)
+			hintSquare.disabled = true
 			
 		} else {
 			// If that square is not empty epeat the function
@@ -453,12 +550,14 @@ const checkSquareEmptiness = (square) => {
 const getHint = (square) => {
 	// Create event listener on the hint button
 	hintBtn.addEventListener("click", function(){
+		clickSound.play()
 		
 		checkSquareEmptiness(square)	
 		
 		// Disable button
 		hintBtn.disabled = true;
 		hintBtn.style.background = "gray"
+		
 	})	
 }
 
@@ -483,24 +582,7 @@ const getHint = (square) => {
 
 
 
-// TIMER FUNCTIONALITY
-/////////////////////////////////////////////
 
-
-const setTimer = () => {
-	const timer = setInterval(() => {
-		time--;
-		if(time === 0){
-			clearInterval(timer)
-			toggleElements()
-			pausedMessage.style.display = "none"
-			timesUp.style.display = "inline"
-		}
-		document.querySelector("#timer").innerHTML = ("Time: " + time)
-	}, 1000)
-}
-
-///////////////////////*************************//////////////////////
 
 
 createSquares()
