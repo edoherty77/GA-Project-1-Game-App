@@ -52,39 +52,18 @@ startBtn.disabled = true;
 newGameBtn.disabled = true
 undoBtn.disabled = true;
 undoBtn.style.background = "gray"
-
-///////////////////////*************************//////////////////////
-
-
-
-
-// TIMER FUNCTIONALITY
-////////////////////////////////////////////////////////////
 let isPaused = false
 
-
-
-
-// const setTimer = () => {
-// 	const timer = setInterval(function() {
-// 	if(!isPaused){
-// 		time--;
-// 	}
-	
-// 	if(time === 0){
-// 		clearInterval(timer)
-// 		toggleElements()
-// 		pausedMessage.style.display = "none"
-// 		timesUp.style.display = "inline"
-// 		newGameBtn.disabled = false
-// 		mistakeText.style.display = "none"
-// 	}
-// 	document.querySelector("#timer").innerHTML = ("Time: " + time)
-// 	}, 1000)
-// }
-
-
 ///////////////////////*************************//////////////////////
+
+
+
+
+
+
+
+
+
 
 
 
@@ -192,10 +171,14 @@ const startNewGame = () => {
 				diffButtons[j].style.background = "none"			
 			}
 
-			// Enable answer buttons
+			// Enable hint button
+			hintBtn.disabled = false;
+			hintBtn.style.background = "none"
+
+			// Disable answer buttons
 			let answerButtons = document.querySelectorAll(".answerButton")
 			for(let i = 0; i < answerButtons.length; i++){
-				answerButtons[i].disabled = false
+				answerButtons[i].disabled = true
 			}
 
 			// Reset mistake count		
@@ -248,6 +231,7 @@ const toggleElements = () => {
  		answerButton.textContent = i
  		answerButton.setAttribute("value", i)
  		
+ 		answerButton.disabled = true
  		//Give the buttons some style and room
  		answerButton.classList.add("btn", "btn-primary", "answerButton")
  		
@@ -293,7 +277,7 @@ const solutionArray = [
  			cell.className = "td"
  			// Create divs for each cell
  			let square = document.createElement("button")
- 			square.classList.add("btn", "game-squares")
+ 			square.classList.add("btn", "game-squares", "diff-buttons")
  			
 
   			// Set button's value and text to be number from solution array		
@@ -368,7 +352,7 @@ const clearByDifficulty = (square) => {
 		// time = 10;
 
 		// new stuff
-		let twoMinutes = 10
+		let twoMinutes = 60 * 2
 		display = document.querySelector("#timer")
 		setTimer(twoMinutes, display)
 	})
@@ -451,6 +435,12 @@ const getSquareValue = (square) => {
 	square.addEventListener("click", function(){
 		squarePicked = square
 		clickSound.play()
+
+		// Enable answer buttons
+			let answerButtons = document.querySelectorAll(".answerButton")
+			for(let i = 0; i < answerButtons.length; i++){
+				answerButtons[i].disabled = false
+			}
 	})
 }
 
@@ -460,7 +450,10 @@ const getSquareValue = (square) => {
 const getAnswerValue = (answerButton) => {
 	// Set the global variable "answer" to the value of the bottom number chosen
 	answerButton.addEventListener("click", function(){
-
+		let answerButtons = document.querySelectorAll(".answerButton")
+		for(let i = 0; i < answerButtons.length; i++){
+			answerButtons[i].disabled = true
+		}
 		answer = answerButton.value
 		
 		if(squarePicked.value === answer){
@@ -580,7 +573,8 @@ const checkSquareEmptiness = (square) => {
 		if(hintSquare.innerHTML == " "){
 			// make the square.innerHTML = square.value
 			hintSquare.innerHTML = hintSquare.value
-			hintSquare.style.color = 'rgb(3, 252, 182)'
+			
+			hintSquare.style.background = 'rgb(204, 188, 67)'
 			console.log(hintSquare)
 			hintSquare.disabled = true
 			
@@ -614,6 +608,10 @@ const getHint = (square) => {
 ///////////////////////*************************//////////////////////
 
 
+
+
+// TIMER FUNCTIONALITY
+////////////////////////////////////////////////////////////
 
 // Timer functionality
 // Code taken and minipulated from a stackoverflow post
@@ -651,6 +649,7 @@ const setTimer = (duration, display) => {
 	}, 1000)
 }
 
+///////////////////////*************************//////////////////////
 
 
 createSquares()
