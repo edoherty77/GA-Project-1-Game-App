@@ -61,22 +61,28 @@ undoBtn.style.background = "gray"
 // TIMER FUNCTIONALITY
 ////////////////////////////////////////////////////////////
 let isPaused = false
-const timer = setInterval(function() {
-	if(!isPaused){
-		time--;
-	}
+
+
+
+
+// const setTimer = () => {
+// 	const timer = setInterval(function() {
+// 	if(!isPaused){
+// 		time--;
+// 	}
 	
-	if(time === 0){
-		clearInterval(timer)
-		toggleElements()
-		pausedMessage.style.display = "none"
-		timesUp.style.display = "inline"
-		newGameBtn.disabled = false
-		mistakeText.style.display = "none"
-		console.log(isPaused)
-	}
-	document.querySelector("#timer").innerHTML = ("Time: " + time)
-	}, 1000)
+// 	if(time === 0){
+// 		clearInterval(timer)
+// 		toggleElements()
+// 		pausedMessage.style.display = "none"
+// 		timesUp.style.display = "inline"
+// 		newGameBtn.disabled = false
+// 		mistakeText.style.display = "none"
+// 	}
+// 	document.querySelector("#timer").innerHTML = ("Time: " + time)
+// 	}, 1000)
+// }
+
 
 ///////////////////////*************************//////////////////////
 
@@ -125,8 +131,9 @@ const startGame = () => {
 
 const pauseGame = () => {
 	pauseBtn.addEventListener("click", function(e){
-		e.preventDefault()
 		isPaused = true
+		e.preventDefault()
+		
 		pauseSound.play()
 		startBtn.style.display = "inline"
 		
@@ -162,9 +169,12 @@ const startNewGame = () => {
 		
 		// If yes, have greeting, start button appear. Disable startBtn/newGameButton. Enable diffbuttons
 		promptYesBtn.addEventListener("click", function(){
-			// toggle all elements to hide or appear(difficulty buttons, paused message, start button)
+			
+	
+
 			successSound.play()
 
+			// Hide elemtents
 			mistakeText.style.display = "none"
 			timeDisplay.style.display = "none"
 			newGamePrompt.style.display = "none"
@@ -193,6 +203,7 @@ const startNewGame = () => {
 			mistakesCount = 0
 		})
 
+		// If no, hide/show/disable appropriate elements to get back to paused screen
 		promptNoBtn.addEventListener("click", function(){
 			// Bring user back to pause menu
 			
@@ -208,7 +219,7 @@ const startNewGame = () => {
 
 
 		
-
+// Create function that selects the elements I want to hide and show when clicking pause and start
 const toggleElements = () => {
 	let answerButtons = document.querySelectorAll(".answerButton")
 	for(let i = 0; i < answerButtons.length; i++){
@@ -216,9 +227,8 @@ const toggleElements = () => {
 	}
 	undoBtn.classList.toggle("show-hide")
 	hintBtn.classList.toggle("show-hide")
-	notesBtn.classList.toggle("show-hide")
+	// notesBtn.classList.toggle("show-hide")
 	gameTable.classList.toggle("show-hide")
-	
 	pauseBtn.classList.toggle("show-hide")
 }
 
@@ -355,7 +365,12 @@ const clearByDifficulty = (square) => {
 		mediumBtn.disabled = true
 		hard.disabled = true
 		expert.disabled = true
-		time = 10;
+		// time = 10;
+
+		// new stuff
+		let twoMinutes = 10
+		display = document.querySelector("#timer")
+		setTimer(twoMinutes, display)
 	})
 
 
@@ -372,7 +387,11 @@ const clearByDifficulty = (square) => {
 		easy.disabled = true
 		hard.disabled = true
 		expert.disabled = true
-		time = 200
+		// time = 200
+
+		let fourMinutes = 60 * 4
+		display = document.querySelector("#timer")
+		setTimer(fourMinutes, display)
 	})
 	hardBtn.addEventListener("click", function(){
 		clickSound.play()
@@ -388,7 +407,11 @@ const clearByDifficulty = (square) => {
 		medium.disabled = true
 		easy.disabled = true
 		expert.disabled = true
-		time = 300
+		// time = 300
+
+		let tenMinutes = 60 * 10
+		display = document.querySelector("#timer")
+		setTimer(tenMinutes, display)
 	})
 	expertBtn.addEventListener("click", function(){
 		clickSound.play()
@@ -403,7 +426,10 @@ const clearByDifficulty = (square) => {
 		medium.disabled = true
 		hard.disabled = true
 		easy.disabled = true
-		time = 400
+		// time = 400
+		let twentyMinutes = 60 * 20
+		display = document.querySelector("#timer")
+		setTimer(twentyMinutes, display)
 	})
 }
 
@@ -454,7 +480,7 @@ const getAnswerValue = (answerButton) => {
 			// Disable elements
 			let answerButtons = document.querySelectorAll(".answerButton")
 			hintBtn.disabled = true
-			notesBtn.disabled = true
+			// notesBtn.disabled = true
 			for(let i = 0; i < answerButtons.length; i++){
 				answerButtons[i].disabled = true
 			}
@@ -494,7 +520,7 @@ const undoWrongAnswer = () => {
 		// Enable elements
 		let answerButtons = document.querySelectorAll(".answerButton")
 		hintBtn.disabled = false
-		notesBtn.disabled = false
+		// notesBtn.disabled = false
 
 		for(let i = 0; i < answerButtons.length; i++){
 			answerButtons[i].disabled = false
@@ -589,23 +615,41 @@ const getHint = (square) => {
 
 
 
-// NOTE BUTTON FUNCTIONALITY
-///////////////////////////////////////////////////////////
- 
-//Notes function
-// When clicked, all empty buttons will be on display none
-// When a square is clicked, a div is created
-// The user can then click the bottom buttons, which their value will appear inside created div
-// To remove number from the div from the square that is selected, the user can click the number at the bottom and it will toggle off
-// Create and erase function
-// To get rid of all numbers typed in, notes mode is off. the user can click on the square and press the erase button, 
-// or click on a number, and the number will replace the div
+// Timer functionality
+// Code taken and minipulated from a stackoverflow post
+// https://stackoverflow.com/questions/20618355/the-simplest-possible-javascript-countdown-timer
 
-///////////////////////*************************//////////////////////
+const setTimer = (duration, display) => {
+	isPaused = false
+	let timer = duration;
+	let minutes;
+	let seconds;
+	const countdown = setInterval(function() {
+		if(!isPaused){
+			minutes = parseInt(timer / 60, 10);
+    		seconds = parseInt(timer % 60, 10);
+       
+    		minutes = minutes < 10 ? "0" + minutes : minutes;
+    		seconds = seconds < 10 ? "0" + seconds : seconds;
+    		display.textContent = minutes + ":" + seconds;
+    		if (--timer < 0) {
+    			clearInterval(countdown)
+        		timer = duration;
+        		toggleElements()
+				pausedMessage.style.display = "none"
+				timesUp.style.display = "inline"
+				newGameBtn.disabled = false
+				mistakeText.style.display = "none"
+        	}
 
-
-
-
+        	promptYesBtn.addEventListener("click", function(){
+        		clearInterval(countdown)
+        	})
+        		
+	}	
+	
+	}, 1000)
+}
 
 
 

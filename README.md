@@ -40,8 +40,6 @@ The undo button once again becomes disabled
 If the user clicks the hint button, a random empty square will fill up with its correct value in the color green.
 The hint button will become disabled for the rest of the game
 
-If the user selects the notes button...
-
 
 
 
