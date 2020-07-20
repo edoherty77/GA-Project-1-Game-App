@@ -58,10 +58,7 @@ let isPaused = false
 ///////////////////////*************************//////////////////////
 
 
-const randomPuzzleGenerator = () => {
-	randomPuzzle = Math.floor(Math.random() * 4) 
-	
-}
+
 
 
 
@@ -243,7 +240,10 @@ const toggleElements = () => {
 
 
 
-
+const randomPuzzleGenerator = () => {
+	randomPuzzle = Math.floor(Math.random() * 4) 
+	
+}
 
 
 // CREATING SQUARES FOR GAME BOARD
@@ -330,7 +330,7 @@ const solutionArray =
  			let square = document.createElement("button")
  			square.classList.add("btn", "game-squares", "diff-buttons")
  	
- 			
+
   			// Set button's value and text to be number from solution array		
  			square.setAttribute("value", solutionArray[i][j])
  			square.innerText = solutionArray[i][j]
@@ -400,12 +400,12 @@ const clearByDifficulty = (square) => {
 		mediumBtn.disabled = true
 		hard.disabled = true
 		expert.disabled = true
-		// time = 10;
+		
 
-		// new stuff
-		let twoMinutes = 60 * 2
+		// Set Timer
+		let fiveMinutes = 60 * 5
 		display = document.querySelector("#timer")
-		setTimer(twoMinutes, display)
+		setTimer(fiveMinutes, display)
 	})
 
 
@@ -422,11 +422,11 @@ const clearByDifficulty = (square) => {
 		easy.disabled = true
 		hard.disabled = true
 		expert.disabled = true
-		// time = 200
-
-		let fourMinutes = 60 * 4
+		
+		//Set Timer
+		let tenMinutes = 60 * 10
 		display = document.querySelector("#timer")
-		setTimer(fourMinutes, display)
+		setTimer(tenMinutes, display)
 	})
 	hardBtn.addEventListener("click", function(){
 		clickSound.play()
@@ -442,8 +442,9 @@ const clearByDifficulty = (square) => {
 		medium.disabled = true
 		easy.disabled = true
 		expert.disabled = true
-		// time = 300
+	
 
+		// Set Timer
 		let tenMinutes = 60 * 10
 		display = document.querySelector("#timer")
 		setTimer(tenMinutes, display)
@@ -461,7 +462,8 @@ const clearByDifficulty = (square) => {
 		medium.disabled = true
 		hard.disabled = true
 		easy.disabled = true
-		// time = 400
+		
+		//Set Timer
 		let twentyMinutes = 60 * 20
 		display = document.querySelector("#timer")
 		setTimer(twentyMinutes, display)

@@ -48,7 +48,9 @@ All board elements will disappear, and a congratulations message will appear, an
 When selected, the app will show its original onload page
 
 
+URL for wireframe
 
+https://wireframe.cc/pro/edit/358671
 
 
 
