@@ -34,6 +34,7 @@ let time;
 let squareIndex = 1
 let randomIndex;
 let mistakesCount = 0
+let randomPuzzle;
 
 let undoSound = new Audio("./sounds/undo-sound.wav")
 let successSound = new Audio("./sounds/success-sound.wav")
@@ -57,15 +58,10 @@ let isPaused = false
 ///////////////////////*************************//////////////////////
 
 
-
-
-
-
-
-
-
-
-
+const randomPuzzleGenerator = () => {
+	randomPuzzle = Math.floor(Math.random() * 4) 
+	
+}
 
 
 
@@ -149,8 +145,8 @@ const startNewGame = () => {
 		// If yes, have greeting, start button appear. Disable startBtn/newGameButton. Enable diffbuttons
 		promptYesBtn.addEventListener("click", function(){
 			
-	
-
+			
+			console.log(randomPuzzle)
 			successSound.play()
 
 			// Hide elemtents
@@ -175,11 +171,12 @@ const startNewGame = () => {
 			hintBtn.disabled = false;
 			hintBtn.style.background = "none"
 
-			// Disable answer buttons
+			// Disable answer buttons and undo button
 			let answerButtons = document.querySelectorAll(".answerButton")
 			for(let i = 0; i < answerButtons.length; i++){
 				answerButtons[i].disabled = true
 			}
+			undoBtn.disabled = true
 
 			// Reset mistake count		
 			mistakeCountDisplay.innerHTML = 0
@@ -253,7 +250,60 @@ const toggleElements = () => {
 /////////////////////////////////////////////////////
 
 // Create an array of game puzzles
-const solutionArray = [
+
+// const test = [
+// [
+// [5, 2, 7, 9, 4, 6, 1, 3, 8],
+// [8, 9, 4, 1, 3, 5, 2, 7, 6],
+// [1, 6, 3, 7, 2, 8, 9, 4, 5],
+// [3, 8, 2, 6, 9, 4, 7, 5, 1],
+// [4, 7, 5, 8, 1, 2, 6, 9, 3],
+// [9, 1, 6, 3, 5, 7, 4, 8, 2],
+// [7, 3, 8, 2, 6, 9, 5, 1, 4],
+// [6, 5, 1, 4, 7, 3, 8, 2, 9],
+// [2, 4, 9, 5, 8, 1, 3, 6, 7]
+// ],
+// [
+// [5, 3, 1, 9, 8, 4, 7, 6, 2],
+// [6, 4, 9, 2, 5, 7, 3, 8, 1],
+// [8, 2, 7, 6, 1, 3, 4, 5, 9],
+// [9, 6, 2, 3, 7, 8, 1, 4, 5],
+// [1, 8, 5, 4, 2, 9, 6, 7, 3],
+// [3, 7, 4, 5, 6, 1, 2, 9, 8],
+// [2, 1, 8, 7, 4, 5, 9, 3, 6],
+// [7, 5, 3, 1, 9, 6, 8, 2, 4],
+// [4, 9, 6, 8, 3, 2, 5, 1, 7]
+// ],
+// [
+// [4, 2, 7, 8, 6, 5, 9, 3, 1],
+// [9, 1, 5, 2, 4, 3, 6, 8, 7],
+// [6, 8, 3, 7, 9, 1, 2, 5, 4],
+// [8, 7, 1, 6, 2, 9, 3, 4, 5],
+// [3, 4, 9, 1, 5, 8, 7, 2, 6],
+// [2, 5, 6, 3, 7, 4, 8, 9, 1],
+// [5, 8, 9, 4, 3, 7, 1, 6, 2],
+// [1, 3, 2, 5, 8, 6, 4, 7, 9],
+// [7, 6, 4, 9, 1, 2, 5, 3, 8]
+// ],
+// [
+// [7, 3, 4, 1, 6, 2, 9, 8, 5],
+// [6, 8, 5, 4, 7, 9, 3, 2, 1],
+// [2, 1, 9, 5, 3, 8, 6, 4, 7],
+// [5, 6, 8, 9, 1, 3, 2, 7, 4],
+// [3, 4, 2, 6, 8, 7, 1, 5, 9],
+// [1, 9, 7, 2, 5, 4, 8, 3, 6],
+// [8, 5, 1, 7, 2, 6, 4, 9, 3],
+// [9, 2, 6, 3, 4, 5, 7, 1, 8],
+// [4, 7, 3, 8, 9, 1, 5, 6, 2]
+// ]
+// ]
+
+
+
+
+
+const solutionArray = 
+[
 [5, 2, 7, 9, 4, 6, 1, 3, 8],
 [8, 9, 4, 1, 3, 5, 2, 7, 6],
 [1, 6, 3, 7, 2, 8, 9, 4, 5],
@@ -264,6 +314,7 @@ const solutionArray = [
 [6, 5, 1, 4, 7, 3, 8, 2, 9],
 [2, 4, 9, 5, 8, 1, 3, 6, 7]
 ]
+
 
  // Set up squares (inputs) for the game board
  const createSquares = () => {
@@ -278,8 +329,8 @@ const solutionArray = [
  			// Create divs for each cell
  			let square = document.createElement("button")
  			square.classList.add("btn", "game-squares", "diff-buttons")
+ 	
  			
-
   			// Set button's value and text to be number from solution array		
  			square.setAttribute("value", solutionArray[i][j])
  			square.innerText = solutionArray[i][j]
@@ -629,7 +680,7 @@ const setTimer = (duration, display) => {
        
     		minutes = minutes < 10 ? "0" + minutes : minutes;
     		seconds = seconds < 10 ? "0" + seconds : seconds;
-    		display.textContent = minutes + ":" + seconds;
+    		
     		if (--timer < 0) {
     			clearInterval(countdown)
         		timer = duration;
@@ -643,7 +694,7 @@ const setTimer = (duration, display) => {
         	promptYesBtn.addEventListener("click", function(){
         		clearInterval(countdown)
         	})
-        		
+        display.textContent = minutes + ":" + seconds;		
 	}	
 	
 	}, 1000)
